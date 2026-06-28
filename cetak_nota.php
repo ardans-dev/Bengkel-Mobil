@@ -43,8 +43,8 @@ $trx = mysqli_fetch_assoc($query_trx);
 <body onload="window.print()">
     <div class="nota-container">
         <div class="header">
-            <h2>BENGKEL MOBIL BUDI MUNDU</h2>
-            <p style="margin: 5px 0;">Jl.Solo-Purwodadi Km 9.2<br>Telp: 0815-4832-9839</p>
+            <h2>BENGKEL MOBIL ARDANS</h2>
+            <p style="margin: 5px 0;">Jl.Slamet Riyadi, Kota Surakarta<br>Telp: 0812-3456-7890</p>
         </div>
         
         <table class="info-table">
