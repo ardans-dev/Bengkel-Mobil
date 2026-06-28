@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bengkel Mobil Budi - Solusi Kendaraan Anda</title>
+    <title>Bengkel Mobil ARDANS - Solusi Kendaraan Anda</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .hero-section {
@@ -19,7 +19,7 @@
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="index.php">BENGKEL BUDI</a>
+            <a class="navbar-brand fw-bold" href="index.php">BENGKEL MOBIL ARDANS</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -74,9 +74,9 @@
 
     <footer id="kontak" class="bg-dark text-white text-center py-4 mt-5">
         <div class="container">
-            <h5>Bengkel Mobil Budi</h5>
-            <p>Jl. Solo-Purwodadi Km 9.2 | Telp: 0815-4832-9839</p>
-            <small class="text-secondary">&copy; 2026 Bengkel Budi. All rights reserved.</small>
+            <h5>Bengkel Mobil Ardans</h5>
+            <p>Jl. slamet riyadi, Kota Surakarta | Telp: 0812-3456-7890</p>
+            <small class="text-secondary">&copy; 2026 Bengkel mobil Ardans. All rights reserved.</small>
         </div>
     </footer>
 
