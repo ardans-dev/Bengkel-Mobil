@@ -1093,6 +1093,30 @@ footer {
     transform: translateY(-2px);
 }
 
+
+.brand-logo-wrap {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.65rem;
+    width: 100%;
+}
+
+.brand-logo-img {
+    max-height: 48px;
+    max-width: 95px;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.45));
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brand-badge-card:hover .brand-logo-img {
+    transform: scale(1.12);
+}
+
 .brand-badge-icon {
     font-size: 1.75rem;
     margin-bottom: 0.5rem;

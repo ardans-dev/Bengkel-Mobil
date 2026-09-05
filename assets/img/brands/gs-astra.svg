@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" width="100" height="70">
+  <!-- Blue GS Badge -->
+  <rect x="12" y="8" width="76" height="34" rx="6" fill="#003A70"/>
+  <!-- GS Bold Lettering -->
+  <text x="40" y="33" font-family="Arial Black, sans-serif" font-weight="900" font-size="20" fill="#FFCC00" letter-spacing="1">GS</text>
+  <text x="46" y="24" font-family="Arial, sans-serif" font-weight="900" font-size="7" fill="#FFFFFF">ASTRA</text>
+  <text x="46" y="34" font-family="Arial, sans-serif" font-weight="700" font-size="5.5" fill="#99CCFF">BATTERY</text>
+  <text x="50" y="58" font-family="Arial, sans-serif" font-weight="800" font-size="7.5" fill="#FFCC00" text-anchor="middle" letter-spacing="1">AKI RESMI MOBIL</text>
+</svg>

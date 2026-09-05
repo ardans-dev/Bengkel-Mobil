@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" width="100" height="70">
+  <g fill="none" stroke="#C0C0C0" stroke-width="4">
+    <!-- Arc Top -->
+    <path d="M22,23 A26,26 0 0,1 78,23"/>
+    <!-- Arc Bottom -->
+    <path d="M78,35 A26,26 0 0,1 22,35"/>
+  </g>
+  <!-- Bar Box -->
+  <rect x="14" y="21" width="72" height="16" rx="2" fill="#18233d" stroke="#C0C0C0" stroke-width="2.5"/>
+  <text x="50" y="33" font-family="Arial, sans-serif" font-weight="900" font-size="8.5" fill="#FFFFFF" text-anchor="middle" letter-spacing="1.5">NISSAN</text>
+  <text x="50" y="65" font-family="Arial, sans-serif" font-weight="700" font-size="8" fill="#94A3B8" text-anchor="middle">GENUINE PARTS</text>
+</svg>

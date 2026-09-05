@@ -523,108 +523,131 @@ if (!empty($search_nota)) {
                     </p>
                 </div>
 
-                <!-- Brand Grid Showcase -->
+                <!-- Brand Grid Showcase dengan Logo Vektor Resmi -->
                 <div class="brand-grid">
                     
-                    <!-- Pabrikan Mobil -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-danger"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="brand-badge-name">TOYOTA</div>
-                        <div class="brand-badge-category">Genuine Parts</div>
+                    <!-- 1. Toyota -->
+                    <div class="brand-badge-card" title="Toyota Genuine Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/toyota.svg" alt="Logo Toyota" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Toyota Genuine</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-danger"><i class="bi bi-car-front"></i></div>
-                        <div class="brand-badge-name">DAIHATSU</div>
-                        <div class="brand-badge-category">Genuine Parts</div>
+                    <!-- 2. Daihatsu -->
+                    <div class="brand-badge-card" title="Daihatsu Genuine Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/daihatsu.svg" alt="Logo Daihatsu" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Daihatsu Genuine</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-danger"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="brand-badge-name">HONDA</div>
-                        <div class="brand-badge-category">Genuine Parts</div>
+                    <!-- 3. Honda -->
+                    <div class="brand-badge-card" title="Honda Genuine Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/honda.svg" alt="Logo Honda" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Honda Genuine</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-danger"><i class="bi bi-car-front"></i></div>
-                        <div class="brand-badge-name">MITSUBISHI</div>
-                        <div class="brand-badge-category">Motors Genuine</div>
+                    <!-- 4. Mitsubishi -->
+                    <div class="brand-badge-card" title="Mitsubishi Motors Genuine">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/mitsubishi.svg" alt="Logo Mitsubishi" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Mitsubishi Genuine</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-primary"><i class="bi bi-car-front-fill"></i></div>
-                        <div class="brand-badge-name">SUZUKI</div>
-                        <div class="brand-badge-category">Genuine Parts</div>
+                    <!-- 5. Suzuki -->
+                    <div class="brand-badge-card" title="Suzuki Genuine Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/suzuki.svg" alt="Logo Suzuki" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Suzuki Genuine</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-secondary"><i class="bi bi-car-front"></i></div>
-                        <div class="brand-badge-name">NISSAN</div>
-                        <div class="brand-badge-category">Genuine Parts</div>
+                    <!-- 6. Nissan -->
+                    <div class="brand-badge-card" title="Nissan Genuine Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/nissan.svg" alt="Logo Nissan" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Nissan Genuine</div>
                     </div>
 
-                    <!-- Pelumas & Oli -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-warning"><i class="bi bi-droplet-half"></i></div>
-                        <div class="brand-badge-name">SHELL HELIX</div>
-                        <div class="brand-badge-category">Official Lubricant</div>
+                    <!-- 7. Shell Helix -->
+                    <div class="brand-badge-card" title="Shell Helix Lubricants">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/shell.svg" alt="Logo Shell Helix" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Pelumas Resmi</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-success"><i class="bi bi-droplet-fill"></i></div>
-                        <div class="brand-badge-name">CASTROL</div>
+                    <!-- 8. Castrol -->
+                    <div class="brand-badge-card" title="Castrol Engine Oils">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/castrol.svg" alt="Logo Castrol" class="brand-logo-img">
+                        </div>
                         <div class="brand-badge-category">Engine Oils</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-primary"><i class="bi bi-droplet"></i></div>
-                        <div class="brand-badge-name">FASTRON</div>
-                        <div class="brand-badge-category">Pertamina Lubricant</div>
-                    </div>
-
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-info"><i class="bi bi-fuel-pump-fill"></i></div>
-                        <div class="brand-badge-name">MOBIL 1</div>
+                    <!-- 9. Pertamina Fastron -->
+                    <div class="brand-badge-card" title="Pertamina Fastron Synthetic">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/pertamina.svg" alt="Logo Fastron Pertamina" class="brand-logo-img">
+                        </div>
                         <div class="brand-badge-category">Synthetic Oil</div>
                     </div>
 
-                    <!-- Komponen & Elektrikal -->
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-info"><i class="bi bi-cpu-fill"></i></div>
-                        <div class="brand-badge-name">DENSO</div>
-                        <div class="brand-badge-category">Spark & AC Parts</div>
+                    <!-- 10. Denso -->
+                    <div class="brand-badge-card" title="Denso Automotive Parts">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/denso.svg" alt="Logo Denso" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Busi &amp; AC OEM</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-danger"><i class="bi bi-lightning-charge-fill"></i></div>
-                        <div class="brand-badge-name">BOSCH</div>
-                        <div class="brand-badge-category">Automotive Parts</div>
+                    <!-- 11. Bosch -->
+                    <div class="brand-badge-card" title="Bosch Automotive Tech">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/bosch.svg" alt="Logo Bosch" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">German Tech</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-warning"><i class="bi bi-fire"></i></div>
-                        <div class="brand-badge-name">NGK</div>
-                        <div class="brand-badge-category">Spark Plugs</div>
+                    <!-- 12. NGK -->
+                    <div class="brand-badge-card" title="NGK Spark Plugs">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/ngk.svg" alt="Logo NGK Spark Plugs" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Laser Iridium</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-primary"><i class="bi bi-disc-fill"></i></div>
-                        <div class="brand-badge-name">BENDIX</div>
-                        <div class="brand-badge-category">Brake Systems</div>
+                    <!-- 13. Bendix -->
+                    <div class="brand-badge-card" title="Bendix Brake Systems">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/bendix.svg" alt="Logo Bendix" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Kampas Rem</div>
                     </div>
 
-                    <div class="brand-badge-card">
-                        <div class="brand-badge-icon text-success"><i class="bi bi-battery-charging"></i></div>
-                        <div class="brand-badge-name">GS ASTRA</div>
-                        <div class="brand-badge-category">Automotive Battery</div>
+                    <!-- 14. GS Astra -->
+                    <div class="brand-badge-card" title="GS Astra Battery">
+                        <div class="brand-logo-wrap">
+                            <img src="assets/img/brands/gs-astra.svg" alt="Logo GS Astra" class="brand-logo-img">
+                        </div>
+                        <div class="brand-badge-category">Aki Resmi Mobil</div>
                     </div>
 
                 </div>
 
+                <!-- Jaminan Kualitas & Catatan Hak Cipta / Trademark Disclaimer -->
                 <div class="text-center mt-4">
-                    <small class="text-secondary">
-                        <i class="bi bi-check-circle-fill text-success me-1"></i> Semua suku cadang dilengkapi dengan garansi pemasangan dari Bengkel Ardans.
-                    </small>
+                    <div class="small text-secondary mb-1">
+                        <i class="bi bi-shield-fill-check text-success me-1"></i> Semua suku cadang dan pelumas dijamin <strong>100% Original</strong> dengan garansi pengerjaan dari Bengkel Ardans.
+                    </div>
+                    <div class="text-muted" style="font-size: 0.72rem;">
+                        * Seluruh logo, merek dagang, dan nama produk adalah hak milik masing-masing perusahaan pemegang merek dan hanya digunakan sebagai informasi suku cadang serta spesialisasi servis di Bengkel Ardans.
+                    </div>
                 </div>
 
             </div>

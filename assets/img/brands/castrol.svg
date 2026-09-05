@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" width="100" height="70">
+  <!-- Background Pill -->
+  <rect x="8" y="10" width="84" height="34" rx="17" fill="#008752"/>
+  <!-- Red Arc Swoop -->
+  <path d="M30,10 A17,17 0 0,1 64,44 L25,44 A17,17 0 0,1 30,10 Z" fill="#E31B23"/>
+  <!-- Castrol Typography -->
+  <text x="54" y="32" font-family="Arial, sans-serif" font-weight="900" font-style="italic" font-size="11.5" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.5">Castrol</text>
+  <text x="50" y="64" font-family="Arial, sans-serif" font-weight="800" font-size="8" fill="#00A86B" text-anchor="middle" letter-spacing="1">LUBRICANTS</text>
+</svg>

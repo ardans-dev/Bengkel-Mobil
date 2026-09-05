@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 70" width="100" height="70">
+  <!-- Trapezoid Shield -->
+  <path d="M18,6 L82,6 C84,6 86,8 85,11 L76,50 C75,53 72,55 69,55 L31,55 C28,55 25,53 24,50 L15,11 C14,8 16,6 18,6 Z" fill="none" stroke="#E5E7EB" stroke-width="4"/>
+  <!-- Bold H Symbol with top flares -->
+  <path d="M28,14 L36,14 C36,14 36,25 38,32 L62,32 C64,25 64,14 64,14 L72,14 L70,47 L62,47 C61,42 61,38 61,37 L39,37 C39,38 39,42 38,47 L30,47 Z" fill="#E5E7EB"/>
+  <text x="50" y="67" font-family="Arial, sans-serif" font-weight="900" font-size="8.5" fill="#E5E7EB" text-anchor="middle" letter-spacing="1">HONDA</text>
+</svg>
