@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🚗 Bengkel Mobil Ardans - Web Portal & Sistem Kasir POS
+# Bengkel Mobil Ardans - Web Portal & Sistem Kasir POS
 
 <img src="assets/img/logo.png" alt="Logo Resmi Bengkel Ardans" width="180" style="border-radius: 16px; margin: 15px 0; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
 
@@ -16,7 +16,7 @@
 
 ---
 
-## 📖 Sekilas Tentang Proyek
+## Sekilas Tentang Proyek
 
 **Bengkel Mobil Ardans** adalah sistem web otomotif terpadu dua sisi (*two-sided platform*):
 1. **Sisi Publik (Pengunjung & Pelanggan)**: Menyajikan profil bengkel, katalog jasa servis terkoneksi database, jam operasional buka/tutup dinamis real-time, showcase brand suku cadang OEM resmi, serta pelacak status servis mandiri berstandar keamanan data pribadi (*privacy-safe*).
@@ -24,43 +24,43 @@
 
 ---
 
-## 🌟 Fitur Unggulan
+## Fitur Unggulan
 
-### 1. 🌐 Halaman Depan Publik (Landing Page)
+### 1. Halaman Depan Publik (Landing Page)
 * **Emblem & Identitas Bengkel**: Tampilan visual resmi Bengkel Ardans dengan tema *Dark Slate* yang elegan, responsif, dan nyaman di mata.
-* **🟢 Jam Operasional Real-Time**:
+* **Jam Operasional Real-Time**:
   * Jam buka reguler **08:00 - 16:00 WIB** (Senin - Sabtu).
   * **Otomatis Libur** setiap hari Minggu dan tanggal merah (hari libur nasional Indonesia).
   * Dilengkapi *pulsing animated status dot* (Buka Sekarang, Sedang Tutup, Libur Hari Minggu, Libur Tanggal Merah).
   * Dapat dioverride secara fleksibel oleh admin (*Buka Paksa/Lembur*, *Tutup Sementara*, atau *Libur Mendadak*) lengkap dengan banner pesan pengumuman.
-* **🔍 Cek Status Servis Mandiri (*Privacy-Safe*)**:
+* **Cek Status Servis Mandiri (*Privacy-Safe*)**:
   * Pelanggan cukup memasukkan **ID Nota** (misal: `TRX-20260905-001`).
   * **100% Bebas Kebocoran Data**: Tidak menampilkan nama pelanggan, no telepon, alamat, maupun plat nomor kendaraan.
   * Menampilkan *Visual Stepper Progress* (1. Mobil Diterima $\rightarrow$ 2. Dikerjakan Mekanik $\rightarrow$ 3. Servis Selesai & Siap Diambil), status pembayaran (Lunas / Belum Lunas), catatan teknisi, dan tombol konsultasi WhatsApp.
-* **🛠️ Katalog Layanan Dinamis**: Menampilkan daftar ongkos jasa dan estimasi waktu pengerjaan yang diambil langsung dari database `layanan`.
-* **🏷️ Showcase 14 Brand Suku Cadang Resmi (SVG Vektor Asli)**:
+* **Katalog Layanan Dinamis**: Menampilkan daftar ongkos jasa dan estimasi waktu pengerjaan yang diambil langsung dari database `layanan`.
+* **Showcase 14 Brand Suku Cadang Resmi (SVG Vektor Asli)**:
   * Logo resmi pabrikan: *Toyota, Daihatsu, Honda, Mitsubishi, Suzuki, Nissan*.
   * Pelumas & oli resmi: *Shell Helix, Castrol, Pertamina Fastron, Mobil 1*.
   * Komponen & kelistrikan: *Denso, Bosch, NGK Spark Plugs, Bendix Brakes, GS Astra*.
   * Dilengkapi klausul *Nominative Fair Use* (Trademark Disclaimer).
-* **📍 Lokasi, Kontak & Konsultasi**:
+* **Lokasi, Kontak & Konsultasi**:
   * Tombol interaktif chat langsung ke WhatsApp Customer Service.
   * Peta lokasi workshop responsif via Google Maps.
-* **🔒 Akses Karyawan & Admin di Footer**:
+* **Akses Karyawan & Admin di Footer**:
   * Navbar atas murni untuk pengunjung publik. Link login admin ditempatkan secara rapi dan tersembunyi di bagian paling bawah (*footer*).
 
 ---
 
-### 2. 💼 Sistem Manajemen Operasional (Internal Staff)
-* **📊 Dashboard Pusat Kendali (`dashboard.php`)**: Memantau metrik omzet, mobil yang sedang dikerjakan montir, antrean servis, dan peringatan dini stok menipis (*minimum stock alert*).
-* **⚙️ Panel Pengaturan Bengkel (`pengaturan.php`)**: Konfigurasi jadwal operasional, toggle buka/tutup/libur mendadak, pesan pengumuman, dan nomor WhatsApp resmi tanpa mengubah kodingan.
-* **🛒 Kasir Servis & POS (`kasir.php`)**: Buka surat perintah kerja baru dengan penomoran invoice otomatis unik (`TRX-YYYYMMDD-XXX`), odometer KM, dan keluhan pelanggan.
-* **⚖️ Transaksi Stok ACID (`detail_transaksi.php`)**:
+### 2. Sistem Manajemen Operasional (Internal Staff)
+* **Dashboard Pusat Kendali (`dashboard.php`)**: Memantau metrik omzet, mobil yang sedang dikerjakan montir, antrean servis, dan peringatan dini stok menipis (*minimum stock alert*).
+* **Panel Pengaturan Bengkel (`pengaturan.php`)**: Konfigurasi jadwal operasional, toggle buka/tutup/libur mendadak, pesan pengumuman, dan nomor WhatsApp resmi tanpa mengubah kodingan.
+* **Kasir Servis & POS (`kasir.php`)**: Buka surat perintah kerja baru dengan penomoran invoice otomatis unik (`TRX-YYYYMMDD-XXX`), odometer KM, dan keluhan pelanggan.
+* **Transaksi Stok ACID (`detail_transaksi.php`)**:
   * Pasang jasa servis dan suku cadang secara dinamis.
   * Stok suku cadang otomatis terpotong saat dipasang, dan otomatis kembali jika item dibatalkan.
   * Pembayaran kasir dengan validasi ketat (nominal cukup, hitung kembalian otomatis, bebas nilai negatif).
-* **🖨️ Cetak Nota Kasir Resmi (`cetak_nota.php`)**: Desain struk transaksi rapi yang ramah cetak printer kasir maupun ekspor PDF (`@media print`).
-* **👥 Manajemen Master Data Terpadu (CRUD Lengkap)**:
+* **Cetak Nota Kasir Resmi (`cetak_nota.php`)**: Desain struk transaksi rapi yang ramah cetak printer kasir maupun ekspor PDF (`@media print`).
+* **Manajemen Master Data Terpadu (CRUD Lengkap)**:
   * Data Pelanggan (`pelanggan.php`)
   * Data Mobil Pasien (`kendaraan.php`)
   * Stok Suku Cadang & Gudang (`sparepart.php`)
@@ -69,17 +69,17 @@
 
 ---
 
-## 🛡️ Arsitektur Keamanan & Standar Koding (Security-First)
+## Arsitektur Keamanan & Standar Koding (Security-First)
 
-* 🔒 **100% Prepared Statements (PDO)**: Seluruh interaksi database menggunakan parameter binding bawaan PDO untuk menjamin sistem **kebal terhadap SQL Injection**.
-* 🔑 **Bcrypt Password Hashing**: Kredensial pengguna dienkripsi dengan algoritma standar industri Bcrypt (`password_hash` & `password_verify` cost 12).
-* 🛡️ **Session Fixation Prevention**: Fungsi `session_regenerate_id(true)` otomatis dipanggil saat proses autentikasi berhasil.
-* 🧼 **Strict Output Escaping (Anti-XSS)**: Setiap variabel yang ditampilkan ke HTML dibungkus melalui helper fungsi `e()` (`htmlspecialchars`).
-* 🔁 **Smart Database Fallback**: Koneksi database otomatis mengenali konfigurasi lingkungan lokal WSL2 Linux maupun Laragon/XAMPP di Windows tanpa konfigurasi manual.
+* **100% Prepared Statements (PDO)**: Seluruh interaksi database menggunakan parameter binding bawaan PDO untuk menjamin sistem **kebal terhadap SQL Injection**.
+* **Bcrypt Password Hashing**: Kredensial pengguna dienkripsi dengan algoritma standar industri Bcrypt (`password_hash` & `password_verify` cost 12).
+* **Session Fixation Prevention**: Fungsi `session_regenerate_id(true)` otomatis dipanggil saat proses autentikasi berhasil.
+* **Strict Output Escaping (Anti-XSS)**: Setiap variabel yang ditampilkan ke HTML dibungkus melalui helper fungsi `e()` (`htmlspecialchars`).
+* **Smart Database Fallback**: Koneksi database otomatis mengenali konfigurasi lingkungan lokal WSL2 Linux maupun Laragon/XAMPP di Windows tanpa konfigurasi manual.
 
 ---
 
-## 📁 Struktur Direktori Proyek
+## Struktur Direktori Proyek
 
 ```text
 Bengkel-Mobil/
@@ -138,7 +138,7 @@ Bengkel-Mobil/
 
 ---
 
-## 🛠️ Panduan Instalasi & Menjalankan Aplikasi
+## Panduan Instalasi & Menjalankan Aplikasi
 
 ### 1. Prasyarat Lingkungan
 * **PHP**: Versi 8.1 atau yang lebih baru (ekstensi `pdo_mysql` aktif).
@@ -183,7 +183,7 @@ Bengkel-Mobil/
 
 ---
 
-## 🔑 Kredensial Pengguna Bawaan (Default Login)
+## Kredensial Pengguna Bawaan (Default Login)
 
 Sistem sudah dilengkapi dengan akun pengujian siap pakai:
 
@@ -194,7 +194,7 @@ Sistem sudah dilengkapi dengan akun pengujian siap pakai:
 
 ---
 
-## 🧪 Pengujian & Jaminan Kualitas (Test Suites)
+## Pengujian & Jaminan Kualitas (Test Suites)
 
 Aplikasi telah divalidasi melalui 4 tingkat rangkaian uji otomatis:
 * **`test_landing_page.py`** (4/4 PASS): Verifikasi tampilan halaman publik, integrasi 14 brand SVG resmi, pemenuhan zero-leak PII pada tracker mandiri, dan pergantian mode operasional real-time.
@@ -204,7 +204,7 @@ Aplikasi telah divalidasi melalui 4 tingkat rangkaian uji otomatis:
 
 ---
 
-## 📄 Lisensi & Hak Cipta
+## Lisensi & Hak Cipta
 
 * Seluruh kode sumber sistem berlisensi di bawah **MIT License**.
 * Logo resmi, merek dagang, dan nama produk kendaraan (*Toyota, Daihatsu, Honda, Shell, dll.*) adalah hak milik dari masing-masing pemegang merek resmi (*Nominative Fair Use*).
