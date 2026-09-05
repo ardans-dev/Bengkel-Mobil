@@ -2,17 +2,13 @@
 /**
  * =====================================================================
  * FILE: includes/header.php
- * DESKRIPSI: Template Header & Navigasi Terpadu (Harmonis, Proporsional & Rapi)
+ * DESKRIPSI: Template Header & Navigasi Utama (Dark Theme & Minimalis)
  * =====================================================================
  * 
- * DESAIN BARU:
- * 1. Tidak berdesakan / tidak ada spasi renggang acak (Fixed 62px height).
- * 2. Menu disederhanakan agar pengguna baru langsung paham:
- *    - Dashboard (Pusat Informasi)
- *    - Kasir / Mobil Masuk (Mulai Transaksi)
- *    - Antrean & Servis (Pengerjaan & Kasir Nota)
- *    - Data Master (Semua data inventaris & kontak dalam 1 dropdown rapi)
- * 3. Profil user & Logout berada dalam dropdown kanan yang elegan.
+ * STRUKTUR:
+ * 1. Brand Logo di sebelah kiri.
+ * 2. 4 Pintu Navigasi: Dashboard, Kasir, Antrean & Servis, Data Master (Dropdown).
+ * 3. Profil Kasir & Tombol Logout di sebelah kanan.
  */
 
 $user_login   = current_user();
@@ -41,13 +37,13 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
-    <!-- Stylesheet Desain Terpadu -->
+    <!-- Stylesheet Desain Terpadu (Dark Theme) -->
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
     <!-- =====================================================================
-         NAVBAR UTAMA (PROPORSI PRESISI & RAPI)
+         NAVBAR UTAMA
          ===================================================================== -->
     <header class="navbar-custom">
         <div class="container-xl navbar-inner">
@@ -60,16 +56,16 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
                 <span>Bengkel<span class="text-info">Ardans</span></span>
             </a>
 
-            <!-- 2. Menu Navigasi Sederhana (Hanya 4 Pintu Utama) -->
+            <!-- 2. Menu Navigasi Sederhana -->
             <nav class="d-none d-lg-flex align-items-center nav-menu-group">
                 <!-- 1. Dashboard -->
                 <a href="index.php" class="nav-link-item <?= $current_page == 'index.php' ? 'active' : '' ?>">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
 
-                <!-- 2. Kasir (Pendaftaran Mobil Masuk) -->
+                <!-- 2. Kasir -->
                 <a href="kasir.php" class="nav-link-item <?= $current_page == 'kasir.php' ? 'active' : '' ?>">
-                    <i class="bi bi-car-front-fill"></i> Kasir (Mobil Masuk)
+                    <i class="bi bi-cart-check"></i> Kasir
                 </a>
 
                 <!-- 3. Antrean & Servis -->
@@ -113,14 +109,9 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
                 </div>
             </nav>
 
-            <!-- 3. Sisi Kanan: Tombol Cepat "+ Servis Baru" & Profil Akun -->
+            <!-- 3. Sisi Kanan: Profil Kasir / Admin -->
             <div class="d-flex align-items-center gap-2">
-                <!-- Tombol Aksi Cepat Buka Tiket Servis -->
-                <a href="kasir.php" class="btn-nav-action d-none d-sm-inline-flex">
-                    <i class="bi bi-plus-circle-fill"></i> + Mobil Masuk
-                </a>
-
-                <!-- Dropdown Profil Kasir / Admin -->
+                <!-- Dropdown Profil Akun -->
                 <div class="dropdown">
                     <a href="#" class="user-profile-pill dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
                         <div class="user-avatar-circle"><?= e($inisial) ?></div>
@@ -147,7 +138,7 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
     <!-- Sub-Navbar untuk Pengguna Mobile / Tablet Layar Kecil -->
     <div class="mobile-nav-bar d-lg-none">
         <a href="index.php" class="btn-mobile <?= $current_page == 'index.php' ? 'active' : '' ?>">Dashboard</a>
-        <a href="kasir.php" class="btn-mobile <?= $current_page == 'kasir.php' ? 'active' : '' ?>">+ Mobil Masuk</a>
+        <a href="kasir.php" class="btn-mobile <?= $current_page == 'kasir.php' ? 'active' : '' ?>">Kasir</a>
         <a href="transaksi.php" class="btn-mobile <?= in_array($current_page, ['transaksi.php', 'detail_transaksi.php']) ? 'active' : '' ?>">Antrean</a>
         <a href="sparepart.php" class="btn-mobile <?= $current_page == 'sparepart.php' ? 'active' : '' ?>">Sparepart</a>
         <a href="pelanggan.php" class="btn-mobile <?= $current_page == 'pelanggan.php' ? 'active' : '' ?>">Pelanggan</a>

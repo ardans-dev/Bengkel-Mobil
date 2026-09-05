@@ -1,48 +1,48 @@
 /**
  * =====================================================================
- * SISTEM DESAIN TERPADU - BENGKEL MOBIL ARDANS
+ * SISTEM DESAIN DARK THEME - BENGKEL MOBIL ARDANS
  * =====================================================================
- * Dibuat khusus untuk arsitektur Native PHP, HTML5, CSS3, & Vanilla JS.
- * Fokus:
- * 1. Skala Tipografi Konsisten (tidak ada font loncat-loncat)
- * 2. Header & Navigasi Seimbang (proporsional, tidak mepet / renggang)
- * 3. Alur Pengguna Pemula (intuitif, jelas ke mana harus klik)
- * 4. Komponen Kasir POS & Tabel Data Modern
+ * Desain Dark-Slate Modern (Elegan, Fokus, Tidak Bikin Silau)
+ * 1. Skala Tipografi Terpadu & Konsisten
+ * 2. Background Slate Gelap (#0b1120 & #131c31)
+ * 3. Kontras Tinggi & Nyaman di Mata Kasir/Admin
+ * 4. Komponen Modern (Form, Tabel, Modal, Stat Card)
  */
 
 /* ---------------------------------------------------------------------
-   VARIABEL WARNA & TOKENS DESAIN
+   VARIABEL WARNA & TOKENS DESAIN (DARK THEME)
    --------------------------------------------------------------------- */
 :root {
     /* Brand Colors */
-    --brand-primary: #0284c7;       /* Sky Blue 600 - Segar & Profesional */
+    --brand-primary: #0284c7;       /* Sky Blue 600 */
     --brand-primary-hover: #0369a1;
-    --brand-primary-light: #e0f2fe;
+    --brand-primary-light: rgba(14, 165, 233, 0.15);
     
-    --brand-dark: #0f172a;          /* Slate 900 - Elegan & Kontras */
-    --brand-dark-surface: #1e293b;  /* Slate 800 */
+    --brand-dark: #070b14;          /* Deepest Black-Blue Navbar */
+    --brand-dark-surface: #101728;
     
-    --brand-accent: #f59e0b;        /* Amber 500 - Khusus Tombol Kasir */
+    --brand-accent: #f59e0b;        /* Amber Gold */
     --brand-accent-hover: #d97706;
     
     /* Semantic Colors */
     --color-success: #10b981;
     --color-warning: #f59e0b;
     --color-danger: #ef4444;
-    --color-info: #06b6d4;
+    --color-info: #38bdf8;
 
-    /* Backgrounds & Surfaces */
-    --color-bg: #f8fafc;            /* Slate 50 */
-    --color-surface: #ffffff;
-    --color-surface-subtle: #f1f5f9;/* Slate 100 */
-    --color-border: #e2e8f0;        /* Slate 200 */
-    --color-border-dark: #cbd5e1;
+    /* Backgrounds & Surfaces (DARK SLATE) */
+    --color-bg: #0b1120;            /* Slate 950 Deep Dark */
+    --color-surface: #131c31;       /* Dark Slate Surface */
+    --color-surface-subtle: #18233d;/* Card Header / Input Subtle */
+    --color-surface-elevated: #1e2c4c;
+    --color-border: #223150;        /* Subtle Blue-Slate Border */
+    --color-border-subtle: #1a2742;
 
-    /* Text Colors */
-    --color-text-main: #0f172a;     /* Slate 900 */
-    --color-text-body: #334155;     /* Slate 700 */
-    --color-text-muted: #64748b;    /* Slate 500 */
-    --color-text-light: #94a3b8;    /* Slate 400 */
+    /* Text Colors (HIGH CONTRAST) */
+    --color-text-main: #f8fafc;     /* White/Slate 50 */
+    --color-text-body: #cbd5e1;     /* Slate 300 */
+    --color-text-muted: #94a3b8;    /* Slate 400 */
+    --color-text-light: #64748b;    /* Slate 500 */
 
     /* Typography Scale */
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -55,14 +55,14 @@
     --radius-pill: 9999px;
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
-    --shadow-hover: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
-    --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.25);
+    --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.3);
+    --shadow-dropdown: 0 12px 24px -4px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
 /* ---------------------------------------------------------------------
-   1. RESET & STANDARISASI TIPOGRAFI GLOBAL
+   1. RESET & STANDARISASI TIPOGRAFI GLOBAL (DARK MODE)
    --------------------------------------------------------------------- */
 *, *::before, *::after {
     box-sizing: border-box;
@@ -70,7 +70,7 @@
 
 body {
     font-family: var(--font-sans);
-    font-size: 0.875rem; /* 14px standar aplikasi modern */
+    font-size: 0.875rem; /* 14px */
     line-height: 1.5;
     background-color: var(--color-bg);
     color: var(--color-text-body);
@@ -85,9 +85,9 @@ body {
     font-family: var(--font-mono) !important;
 }
 
-/* Skala Ukuran Heading yang Seimbang & Konsisten */
+/* Skala Ukuran Heading yang Konsisten */
 h1, .h1, .page-title {
-    font-size: 1.375rem; /* 22px */
+    font-size: 1.35rem; /* ~22px */
     font-weight: 700;
     letter-spacing: -0.02em;
     color: var(--color-text-main);
@@ -95,22 +95,22 @@ h1, .h1, .page-title {
 }
 
 h2, .h2 {
-    font-size: 1.2rem;   /* 19.2px */
+    font-size: 1.2rem;   /* ~19px */
     font-weight: 700;
     letter-spacing: -0.015em;
     color: var(--color-text-main);
 }
 
 h3, .h3, .card-title {
-    font-size: 1.0rem;   /* 16px */
+    font-size: 0.95rem;  /* ~15px */
     font-weight: 600;
     letter-spacing: -0.01em;
     color: var(--color-text-main);
 }
 
-h4, .h4 { font-size: 0.9375rem; font-weight: 600; }
-h5, .h5 { font-size: 0.875rem;  font-weight: 600; }
-h6, .h6 { font-size: 0.75rem;   font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+h4, .h4 { font-size: 0.9rem;   font-weight: 600; color: var(--color-text-main); }
+h5, .h5 { font-size: 0.85rem;  font-weight: 600; color: var(--color-text-main); }
+h6, .h6 { font-size: 0.75rem;  font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); }
 
 p, .text-body {
     font-size: 0.875rem;
@@ -124,17 +124,34 @@ p, .text-body {
 }
 
 .text-muted, small, .small {
-    font-size: 0.8125rem !important; /* 13px */
+    font-size: 0.8125rem !important;
     color: var(--color-text-muted) !important;
 }
 
+.text-dark {
+    color: #f8fafc !important;
+}
+
+.text-secondary {
+    color: var(--color-text-muted) !important;
+}
+
+.bg-light {
+    background-color: var(--color-surface-subtle) !important;
+    color: var(--color-text-body) !important;
+}
+
+.border, .border-top, .border-bottom, .border-start, .border-end {
+    border-color: var(--color-border) !important;
+}
+
 /* ---------------------------------------------------------------------
-   2. NAVBAR & HEADER UTAMA (SEIMBANG & PROPORSIONAL)
+   2. NAVBAR & HEADER UTAMA (SELEMPANG GELAP RAPI)
    --------------------------------------------------------------------- */
 .navbar-custom {
     background-color: var(--brand-dark);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    height: 62px;
+    border-bottom: 1px solid var(--color-border);
+    height: 60px;
     display: flex;
     align-items: center;
     position: sticky;
@@ -149,12 +166,11 @@ p, .text-body {
     width: 100%;
 }
 
-/* Logo Brand */
 .navbar-brand-logo {
     display: flex;
     align-items: center;
     gap: 0.6rem;
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: #ffffff !important;
     text-decoration: none;
@@ -166,7 +182,7 @@ p, .text-body {
     width: 32px;
     height: 32px;
     border-radius: var(--radius-sm);
-    background: linear-gradient(135deg, var(--brand-primary) 0%, #0284c7 100%);
+    background: linear-gradient(135deg, var(--brand-primary) 0%, #0369a1 100%);
     color: #ffffff;
     display: flex;
     align-items: center;
@@ -202,19 +218,19 @@ p, .text-body {
 
 .nav-link-item.active {
     color: #ffffff !important;
-    background-color: rgba(2, 132, 199, 0.25);
-    border: 1px solid rgba(2, 132, 199, 0.4);
+    background-color: rgba(14, 165, 233, 0.2);
+    border: 1px solid rgba(14, 165, 233, 0.4);
     font-weight: 600;
 }
 
 /* Dropdown Menu Navbar */
 .nav-dropdown-menu {
-    background-color: var(--brand-dark-surface);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     box-shadow: var(--shadow-dropdown);
     border-radius: var(--radius-md);
     padding: 0.5rem;
-    min-width: 200px;
+    min-width: 210px;
 }
 
 .nav-dropdown-menu .dropdown-item {
@@ -233,36 +249,13 @@ p, .text-body {
 }
 
 .nav-dropdown-menu .dropdown-divider {
-    border-color: rgba(255, 255, 255, 0.08);
+    border-color: var(--color-border);
     margin: 0.4rem 0;
-}
-
-/* Tombol Aksi Utama Kasir / Mobil Masuk */
-.btn-nav-action {
-    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-    color: #ffffff !important;
-    font-weight: 600;
-    font-size: 0.825rem;
-    padding: 0.42rem 0.85rem;
-    border-radius: var(--radius-sm);
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.25);
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-    border: none;
-    white-space: nowrap;
-}
-
-.btn-nav-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.35);
 }
 
 /* User Pill Profil Kasir */
 .user-profile-pill {
-    background-color: rgba(255, 255, 255, 0.07);
+    background-color: rgba(255, 255, 255, 0.06);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: var(--radius-pill);
     padding: 0.25rem 0.75rem 0.25rem 0.35rem;
@@ -270,6 +263,12 @@ p, .text-body {
     align-items: center;
     gap: 0.5rem;
     text-decoration: none;
+    color: #ffffff;
+    transition: background-color 0.15s ease;
+}
+
+.user-profile-pill:hover {
+    background-color: rgba(255, 255, 255, 0.12);
     color: #ffffff;
 }
 
@@ -288,8 +287,8 @@ p, .text-body {
 
 /* Sub-Navbar Khusus Mobile */
 .mobile-nav-bar {
-    background-color: #1e293b;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: #0e1526;
+    border-top: 1px solid var(--color-border);
     padding: 0.5rem 1rem;
     display: flex;
     align-items: center;
@@ -303,7 +302,7 @@ p, .text-body {
     padding: 0.25rem 0.6rem;
     border-radius: var(--radius-sm);
     color: #cbd5e1;
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid var(--color-border);
     text-decoration: none;
 }
 
@@ -314,7 +313,7 @@ p, .text-body {
 }
 
 /* ---------------------------------------------------------------------
-   3. BREADCRUMB & HEADER HALAMAN (STANDAR KONSISTEN)
+   3. BREADCRUMB & HEADER HALAMAN
    --------------------------------------------------------------------- */
 .page-header-box {
     display: flex;
@@ -352,7 +351,7 @@ p, .text-body {
 }
 
 /* ---------------------------------------------------------------------
-   4. KARTU & KONTEN (RADIUS, PADDING & BORDER SERAGAM)
+   4. KARTU & KONTEN (DARK SLATE SURFACES)
    --------------------------------------------------------------------- */
 .card {
     background-color: var(--color-surface);
@@ -360,10 +359,11 @@ p, .text-body {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
+    color: var(--color-text-body);
 }
 
 .card-header {
-    background-color: #fafbfc;
+    background-color: var(--color-surface-subtle);
     border-bottom: 1px solid var(--color-border);
     padding: 0.9rem 1.25rem;
     border-top-left-radius: var(--radius-lg) !important;
@@ -378,7 +378,7 @@ p, .text-body {
 }
 
 .card-footer {
-    background-color: #fafbfc;
+    background-color: var(--color-surface-subtle);
     border-top: 1px solid var(--color-border);
     padding: 0.85rem 1.25rem;
     border-bottom-left-radius: var(--radius-lg) !important;
@@ -386,16 +386,20 @@ p, .text-body {
 }
 
 /* ---------------------------------------------------------------------
-   5. TABEL DATA MODERN & SEARCH BOX
+   5. TABEL DATA MODERN (DARK MODE)
    --------------------------------------------------------------------- */
 .table {
     margin-bottom: 0;
     width: 100%;
+    color: var(--color-text-body);
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--color-text-body);
+    --bs-table-border-color: var(--color-border);
 }
 
 .table th {
-    background-color: #f8fafc;
-    color: #64748b;
+    background-color: #0f182b;
+    color: #94a3b8;
     font-size: 0.725rem;
     font-weight: 600;
     text-transform: uppercase;
@@ -410,11 +414,16 @@ p, .text-body {
     vertical-align: middle;
     border-bottom: 1px solid var(--color-border);
     font-size: 0.85rem;
-    color: #1e293b;
+    color: #e2e8f0;
 }
 
 .table tbody tr:hover td {
-    background-color: #f8fafc;
+    background-color: rgba(255, 255, 255, 0.04);
+}
+
+.table tfoot td {
+    background-color: #0f182b;
+    border-top: 1px solid var(--color-border);
 }
 
 .table-actions {
@@ -430,13 +439,20 @@ p, .text-body {
     padding: 0.35rem 0.75rem 0.35rem 2rem;
     border-radius: var(--radius-sm);
     border: 1px solid var(--color-border);
+    background-color: #0b1120;
+    color: #f8fafc;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: 8px center;
 }
 
+.table-search-input:focus {
+    background-color: #0f172a;
+    color: #f8fafc;
+}
+
 /* ---------------------------------------------------------------------
-   6. TOMBOL, FORM & INPUT
+   6. TOMBOL, FORM & INPUT (DARK MODE)
    --------------------------------------------------------------------- */
 .btn {
     font-family: var(--font-sans);
@@ -461,37 +477,102 @@ p, .text-body {
 .btn-primary {
     background-color: var(--brand-primary);
     border-color: var(--brand-primary);
+    color: #ffffff;
 }
 
 .btn-primary:hover {
     background-color: var(--brand-primary-hover);
     border-color: var(--brand-primary-hover);
+    color: #ffffff;
+}
+
+.btn-warning {
+    background-color: #f59e0b;
+    border-color: #f59e0b;
+    color: #0f172a;
+}
+
+.btn-warning:hover {
+    background-color: #d97706;
+    border-color: #d97706;
+    color: #0f172a;
+}
+
+.btn-light {
+    background-color: #1a253d;
+    border-color: var(--color-border);
+    color: #cbd5e1;
+}
+
+.btn-light:hover {
+    background-color: #223150;
+    border-color: #334466;
+    color: #ffffff;
+}
+
+.btn-outline-secondary {
+    border-color: #2b3d63;
+    color: #94a3b8;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #1e2c4c;
+    border-color: #3b5080;
+    color: #ffffff;
+}
+
+.btn-outline-primary {
+    border-color: #0284c7;
+    color: #38bdf8;
+}
+
+.btn-outline-primary:hover {
+    background-color: #0284c7;
+    color: #ffffff;
 }
 
 .form-label {
     font-size: 0.8rem;
     font-weight: 600;
-    color: #475569;
+    color: #94a3b8;
     margin-bottom: 0.35rem;
 }
 
 .form-control, .form-select {
     border-radius: var(--radius-sm);
-    border: 1px solid #cbd5e1;
+    border: 1px solid var(--color-border);
+    background-color: #0b1120;
+    color: #f8fafc;
     font-size: 0.85rem;
     padding: 0.5rem 0.8rem;
-    color: var(--color-text-main);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .form-control:focus, .form-select:focus {
+    background-color: #0f172a;
     border-color: var(--brand-primary);
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    color: #f8fafc;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.25);
     outline: none;
 }
 
+.form-control::placeholder {
+    color: #64748b;
+}
+
+.form-select option {
+    background-color: #131c31;
+    color: #f8fafc;
+}
+
+.input-group-text {
+    background-color: #18233d;
+    border-color: var(--color-border);
+    color: #94a3b8;
+}
+
 /* ---------------------------------------------------------------------
-   7. BADGES & IDENTITAS KENDARAAN
+   7. BADGES & IDENTITAS KENDARAAN (DARK THEME)
    --------------------------------------------------------------------- */
 .badge {
     font-weight: 500;
@@ -501,7 +582,7 @@ p, .text-body {
 }
 
 .badge-plat {
-    background-color: #0f172a;
+    background-color: #000000;
     color: #ffffff;
     font-family: var(--font-mono);
     font-size: 0.8rem;
@@ -509,70 +590,46 @@ p, .text-body {
     padding: 0.25rem 0.55rem;
     border-radius: var(--radius-sm);
     letter-spacing: 0.05em;
-    border: 1px solid #334155;
+    border: 1px solid #475569;
     display: inline-block;
 }
 
-/* Modern Subtle Badges */
-.badge-success-subtle { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
-.badge-warning-subtle { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
-.badge-danger-subtle  { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
-.badge-info-subtle    { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
-.badge-primary-subtle { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+/* Subtle Glowing Badges */
+.badge-success-subtle {
+    background-color: rgba(16, 185, 129, 0.15);
+    color: #34d399;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.badge-warning-subtle {
+    background-color: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.badge-danger-subtle {
+    background-color: rgba(239, 68, 68, 0.15);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-info-subtle {
+    background-color: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(56, 189, 248, 0.3);
+}
+
+.badge-primary-subtle {
+    background-color: rgba(14, 165, 233, 0.15);
+    color: #38bdf8;
+    border: 1px solid rgba(14, 165, 233, 0.3);
+}
 
 /* ---------------------------------------------------------------------
-   8. ONBOARDING & ALUR KERJA 3 LANGKAH (RAMAH PENGGUNA BARU)
-   --------------------------------------------------------------------- */
-.onboarding-banner {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    border-radius: var(--radius-lg);
-    padding: 1.5rem;
-    color: #ffffff;
-    margin-bottom: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.workflow-step-card {
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: var(--radius-md);
-    padding: 1.15rem;
-    text-decoration: none;
-    color: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    transition: all 0.2s ease;
-}
-
-.workflow-step-card:hover {
-    background: rgba(255, 255, 255, 0.12);
-    transform: translateY(-2px);
-    color: #ffffff;
-    border-color: rgba(255, 255, 255, 0.25);
-}
-
-.step-num-badge {
-    font-size: 0.65rem;
-    font-weight: 700;
-    padding: 0.2rem 0.5rem;
-    border-radius: var(--radius-pill);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    display: inline-block;
-    margin-bottom: 0.5rem;
-}
-
-.step-1-badge { background-color: #f59e0b; color: #0f172a; }
-.step-2-badge { background-color: #38bdf8; color: #0f172a; }
-.step-3-badge { background-color: #10b981; color: #ffffff; }
-
-/* ---------------------------------------------------------------------
-   9. KARTU METRIK STATISTIK (SERAGAM & PRESISI)
+   8. KARTU METRIK STATISTIK (DARK MODE)
    --------------------------------------------------------------------- */
 .stat-card {
-    background: #ffffff;
+    background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
     padding: 1.15rem;
@@ -607,30 +664,63 @@ p, .text-body {
 }
 
 /* ---------------------------------------------------------------------
-   10. POS BILLING TERMINAL (CHECKOUT KASIR)
+   9. MODAL DIALOG (DARK MODE)
    --------------------------------------------------------------------- */
-.pos-terminal-card {
-    background: #ffffff;
+.modal-content {
+    background-color: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-hover);
+    color: var(--color-text-body);
+}
+
+.modal-header {
+    background-color: var(--color-surface-subtle);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1.0rem 1.25rem;
+}
+
+.modal-footer {
+    background-color: var(--color-surface-subtle);
+    border-top: 1px solid var(--color-border);
+    padding: 0.85rem 1.25rem;
+}
+
+.btn-close {
+    filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+/* List Group Dark Mode */
+.list-group-item {
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text-body);
+}
+
+/* ---------------------------------------------------------------------
+   10. POS BILLING TERMINAL
+   --------------------------------------------------------------------- */
+.pos-terminal-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
     overflow: hidden;
 }
 
 .pos-terminal-header {
-    background: #0f172a;
+    background: #090e1a;
     color: #ffffff;
     padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--color-border);
 }
 
 .pos-total-screen {
-    background: #020617;
+    background: #060a12;
     color: #38bdf8;
     padding: 1.25rem;
     border-radius: var(--radius-md);
     text-align: right;
     margin-bottom: 1.25rem;
-    border: 1px solid #1e293b;
+    border: 1px solid var(--color-border);
 }
 
 .pos-total-screen .label {
@@ -653,7 +743,7 @@ p, .text-body {
    11. FOOTER
    --------------------------------------------------------------------- */
 footer {
-    background-color: #ffffff;
+    background-color: var(--brand-dark);
     border-top: 1px solid var(--color-border);
     padding: 1.25rem 0;
     margin-top: auto;

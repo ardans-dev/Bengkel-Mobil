@@ -84,8 +84,8 @@ include __DIR__ . '/includes/header.php';
         <p class="page-subtitle mb-0">Pantau mobil yang sedang diservis montir, kelola pemakaian sparepart, dan lakukan penagihan kasir.</p>
     </div>
     <div class="d-flex align-items-center gap-2">
-        <a href="kasir.php" class="btn btn-warning text-dark fw-bold">
-            <i class="bi bi-plus-circle-fill me-1"></i> + Mobil Masuk Baru
+        <a href="kasir.php" class="btn btn-primary btn-sm">
+            <i class="bi bi-cart-check me-1"></i> Buka Kasir
         </a>
     </div>
 </div>

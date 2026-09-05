@@ -15,7 +15,7 @@
 
 require_once __DIR__ . '/includes/auth.php';
 
-$page_title = "Kasir (Mobil Masuk)";
+$page_title = "Kasir";
 
 // =====================================================================
 // 1. PROSES POST (PENDAFTARAN SERVIS BARU)
@@ -84,9 +84,9 @@ include __DIR__ . '/includes/header.php';
         <ul class="breadcrumb-custom">
             <li><a href="index.php">Dashboard</a></li>
             <li>/</li>
-            <li class="active">Kasir (Mobil Masuk)</li>
+            <li class="active">Kasir</li>
         </ul>
-        <h1 class="page-title mb-1">Kasir (Pendaftaran Mobil Masuk)</h1>
+        <h1 class="page-title mb-1">Kasir — Pendaftaran Servis Masuk</h1>
         <p class="page-subtitle mb-0">Catat mobil pasien yang baru datang, tunjuk montir bertugas, dan terbitkan nota servis baru.</p>
     </div>
     <div>

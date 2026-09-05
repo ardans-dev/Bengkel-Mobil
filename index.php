@@ -2,12 +2,8 @@
 /**
  * =====================================================================
  * FILE: index.php
- * DESKRIPSI: Dashboard Utama dengan Panduan Alur Kerja 3 Langkah Pengguna Baru
+ * DESKRIPSI: Dashboard Utama Operasional & Monitoring Bengkel Mobil
  * =====================================================================
- * 
- * ARSITEKTUR KODE:
- * Mengambil ringkasan metrik analitik bisnis bengkel secara real-time
- * dan memandu kasir/pengguna baru agar langsung paham alur kerja.
  */
 
 require_once __DIR__ . '/includes/auth.php';
@@ -69,7 +65,7 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- =====================================================================
-     BAGIAN 1: HEADER SAMBUTAN & AKSI CEPAT
+     BAGIAN 1: HEADER SAMBUTAN & 1 TOMBOL UTAMA + MOBIL MASUK
      ===================================================================== -->
 <div class="page-header-box">
     <div>
@@ -77,77 +73,15 @@ include __DIR__ . '/includes/header.php';
         <p class="page-subtitle mb-0">Pusat kendali operasional bengkel, monitoring antrean servis, dan kasir penjualan.</p>
     </div>
     <div class="d-flex align-items-center gap-2">
-        <a href="kasir.php" class="btn btn-warning text-dark fw-bold shadow-sm">
+        <!-- SATU-SATUNYA TOMBOL UTAMA BUKA TIKET BARU -->
+        <a href="kasir.php" class="btn btn-warning text-dark fw-bold">
             <i class="bi bi-plus-circle-fill me-1"></i> + Mobil Masuk (Tiket Baru)
         </a>
     </div>
 </div>
 
 <!-- =====================================================================
-     BAGIAN 2: PANDUAN ALUR KERJA 3 LANGKAH (RAMAH PENGGUNA BARU)
-     ===================================================================== -->
-<div class="onboarding-banner">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
-        <div>
-            <h5 class="mb-0 text-white fw-bold"><i class="bi bi-compass text-info me-2"></i>Panduan Alur Kerja Bengkel (3 Langkah Mudah)</h5>
-            <small class="text-white-50">Bingung harus mulai dari mana? Ikuti alur operasional standar di bawah ini:</small>
-        </div>
-        <span class="badge bg-primary">Petunjuk Operasional</span>
-    </div>
-
-    <div class="row g-3">
-        <!-- Langkah 1: Mobil Pasien Datang -->
-        <div class="col-md-4">
-            <div class="workflow-step-card">
-                <div>
-                    <span class="step-num-badge step-1-badge">Langkah 1</span>
-                    <h6 class="text-white fw-bold mb-1 fs-6">Mobil Pasien Masuk</h6>
-                    <p class="text-white-50 small mb-3">
-                        Daftarkan plat nomor mobil, pilih montir yang bertugas, dan catat keluhan kerusakan kendaraan.
-                    </p>
-                </div>
-                <a href="kasir.php" class="btn btn-sm btn-warning text-dark fw-bold w-100">
-                    <i class="bi bi-plus-circle me-1"></i> Mulai di Menu Kasir →
-                </a>
-            </div>
-        </div>
-
-        <!-- Langkah 2: Pengerjaan Servis & Pasang Part -->
-        <div class="col-md-4">
-            <div class="workflow-step-card">
-                <div>
-                    <span class="step-num-badge step-2-badge">Langkah 2</span>
-                    <h6 class="text-white fw-bold mb-1 fs-6">Servis & Pasang Part</h6>
-                    <p class="text-white-50 small mb-3">
-                        Montir membongkar mobil. Tambahkan jasa servis atau suku cadang yang diganti (stok otomatis berkurang).
-                    </p>
-                </div>
-                <a href="transaksi.php" class="btn btn-sm btn-info text-dark fw-bold w-100">
-                    <i class="bi bi-tools me-1"></i> Buka Antrean & Servis →
-                </a>
-            </div>
-        </div>
-
-        <!-- Langkah 3: Kasir Bayar & Cetak Nota -->
-        <div class="col-md-4">
-            <div class="workflow-step-card">
-                <div>
-                    <span class="step-num-badge step-3-badge">Langkah 3</span>
-                    <h6 class="text-white fw-bold mb-1 fs-6">Kasir & Cetak Nota</h6>
-                    <p class="text-white-50 small mb-3">
-                        Servis selesai. Terima uang pembayaran pelanggan, hitung kembalian kasir, lalu cetak struk nota resmi.
-                    </p>
-                </div>
-                <a href="transaksi.php?status=Selesai" class="btn btn-sm btn-success text-white fw-bold w-100">
-                    <i class="bi bi-printer me-1"></i> Kasir Pembayaran →
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- =====================================================================
-     BAGIAN 3: 4 KARTU METRIK RINGKASAN
+     BAGIAN 2: 4 KARTU METRIK RINGKASAN
      ===================================================================== -->
 <div class="row g-3 mb-4">
     <!-- 1. Total Pendapatan -->
@@ -216,7 +150,7 @@ include __DIR__ . '/includes/header.php';
 </div>
 
 <!-- =====================================================================
-     BAGIAN 4: TABEL AKTIVITAS SERVIS & WIDGET STOK
+     BAGIAN 3: TABEL AKTIVITAS SERVIS & WIDGET STOK
      ===================================================================== -->
 <div class="row g-4">
     <!-- Kolom Kiri: 5 Servis Terbaru -->
@@ -253,17 +187,17 @@ include __DIR__ . '/includes/header.php';
                                 <?php foreach ($transaksi_terbaru as $t): ?>
                                     <tr>
                                         <td class="ps-4">
-                                            <a href="detail_transaksi.php?id=<?= (int)$t['id_transaksi'] ?>" class="font-mono fw-bold text-decoration-none text-primary">
+                                            <a href="detail_transaksi.php?id=<?= (int)$t['id_transaksi'] ?>" class="font-mono fw-bold text-decoration-none text-info">
                                                 <?= e($t['kode_transaksi']) ?>
                                             </a>
                                             <div class="text-muted" style="font-size: 0.725rem;"><?= date('d/m/Y H:i', strtotime($t['tanggal_masuk'])) ?></div>
                                         </td>
                                         <td>
                                             <span class="badge-plat me-1"><?= e($t['plat_nomor']) ?></span>
-                                            <span class="fw-semibold text-dark"><?= e($t['merek']) ?></span>
+                                            <span class="fw-semibold text-light"><?= e($t['merek']) ?></span>
                                         </td>
                                         <td>
-                                            <div class="fw-medium text-dark"><?= e($t['nama_pelanggan']) ?></div>
+                                            <div class="fw-medium text-light"><?= e($t['nama_pelanggan']) ?></div>
                                             <small class="text-muted">Mekanik: <?= e($t['nama_mekanik']) ?></small>
                                         </td>
                                         <td>
@@ -275,7 +209,7 @@ include __DIR__ . '/includes/header.php';
                                                 <span class="badge badge-success-subtle"><i class="bi bi-check-circle me-1"></i>Selesai</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="text-end pe-4 font-mono fw-bold text-dark">
+                                        <td class="text-end pe-4 font-mono fw-bold text-light">
                                             <?= rupiah($t['total_biaya']) ?>
                                         </td>
                                     </tr>
@@ -309,7 +243,7 @@ include __DIR__ . '/includes/header.php';
                         <?php foreach ($daftar_kritis as $sp): ?>
                             <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <div>
-                                    <div class="fw-semibold text-dark mb-0"><?= e($sp['nama_sparepart']) ?></div>
+                                    <div class="fw-semibold text-light mb-0"><?= e($sp['nama_sparepart']) ?></div>
                                     <small class="font-mono text-muted"><?= e($sp['kode_sparepart']) ?></small>
                                 </div>
                                 <div class="text-end">
