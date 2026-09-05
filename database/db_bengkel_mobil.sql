@@ -177,8 +177,8 @@ CREATE TABLE detail_transaksi_sparepart (
 -- Akun 1: username 'admin' | password 'admin123' (hash Bcrypt: $2y$10$wE1UuI.1Gf4Y9Oeqf3NqOu6.7J3g7L0L0K1Y6Uv2Oq5M0D2Xq4D8O)
 -- Akun 2: username 'kasir' | password 'kasir123' (hash Bcrypt: $2y$10$wE1UuI.1Gf4Y9Oeqf3NqOu6.7J3g7L0L0K1Y6Uv2Oq5M0D2Xq4D8O)
 INSERT INTO admin (nama_lengkap, username, password, role) VALUES
-('Ahmad Yardan Rasika', 'admin', '$2y$10$wE1UuI.1Gf4Y9Oeqf3NqOu6.7J3g7L0L0K1Y6Uv2Oq5M0D2Xq4D8O', 'admin'),
-('Kasir Bengkel', 'kasir', '$2y$10$wE1UuI.1Gf4Y9Oeqf3NqOu6.7J3g7L0L0K1Y6Uv2Oq5M0D2Xq4D8O', 'kasir');
+('Ahmad Yardan Rasika', 'admin', '$2y$12$aKB2z.cRgSfhY6uZmQsEF.RxyrXrURb7uyEWbXvqtrPOjpkRkR2Qq', 'admin'),
+('Kasir Bengkel', 'kasir', '$2y$12$7JMb7I90bPLAtTZPLhywnOz/HQsgUZI45ctyCAOsiCrZH0PrvCQ5S', 'kasir');
 
 -- 2. Data Pelanggan Awal
 INSERT INTO pelanggan (nama, no_telepon, alamat) VALUES
