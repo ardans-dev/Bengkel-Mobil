@@ -2,12 +2,8 @@
 /**
  * =====================================================================
  * FILE: layanan.php
- * DESKRIPSI: Modul Tunggal Katalog Jasa Servis & Ongkos Kerja Montir
+ * DESKRIPSI: Modul Master Data Katalog Jasa Servis & Ongkos Kerja Montir
  * =====================================================================
- * 
- * ARSITEKTUR KODE:
- * Menggabungkan data_layanan, tambah_layanan, edit_layanan,
- * dan hapus_layanan menjadi 1 file terpusat.
  */
 
 require_once __DIR__ . '/includes/auth.php';
@@ -98,27 +94,45 @@ $layanan_list = db()->query("SELECT * FROM layanan ORDER BY nama_layanan ASC")->
 include __DIR__ . '/includes/header.php';
 ?>
 
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-2">
+<!-- Header Standar Terpadu -->
+<div class="page-header-box">
     <div>
-        <h3 class="fw-bold mb-1"><i class="bi bi-wrench-adjustable text-primary me-2"></i>Katalog Jasa Servis</h3>
-        <p class="text-muted small mb-0">Daftar ongkos kerja teknisi, paket perawatan mesin, dan estimasi waktu kerja.</p>
+        <ul class="breadcrumb-custom">
+            <li><a href="index.php">Dashboard</a></li>
+            <li>/</li>
+            <li><span>Data Master</span></li>
+            <li>/</li>
+            <li class="active">Katalog Jasa Servis</li>
+        </ul>
+        <h1 class="page-title mb-1">Katalog Jasa Servis & Perawatan</h1>
+        <p class="page-subtitle mb-0">Daftar tarif ongkos kerja montir, paket perawatan mesin berkala, dan estimasi waktu servis.</p>
     </div>
-    <button class="btn btn-primary shadow-sm" data-bs-toggle="modal" data-bs-target="#modalTambah">
-        <i class="bi bi-plus-circle me-1"></i> Tambah Jasa
-    </button>
+    <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambah">
+            <i class="bi bi-tools me-1"></i> + Tambah Jasa Servis
+        </button>
+    </div>
 </div>
 
-<div class="card shadow-sm border-0">
+<!-- Kartu Tabel Data Layanan -->
+<div class="card">
+    <div class="card-header d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-wrench-adjustable-circle text-primary"></i>
+            <span class="card-title mb-0">Daftar Jasa Servis (<?= count($layanan_list) ?> Layanan)</span>
+        </div>
+        <input type="text" id="filterInput" class="form-control form-control-sm table-search-input" placeholder="Cari kode atau nama jasa..." onkeyup="filterTabel()">
+    </div>
     <div class="card-body p-0">
         <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead class="table-light">
+            <table class="table align-middle" id="tableLayanan">
+                <thead>
                     <tr>
-                        <th class="ps-4" style="width: 60px;">#</th>
+                        <th class="ps-4" style="width: 50px;">#</th>
                         <th>Kode & Nama Jasa Servis</th>
                         <th>Kategori</th>
                         <th>Estimasi Waktu</th>
-                        <th>Ongkos Jasa</th>
+                        <th class="text-end">Tarif Biaya Jasa</th>
                         <th class="text-end pe-4">Aksi</th>
                     </tr>
                 </thead>
@@ -126,7 +140,7 @@ include __DIR__ . '/includes/header.php';
                     <?php if (empty($layanan_list)): ?>
                         <tr>
                             <td colspan="6" class="text-center py-5 text-muted">
-                                <i class="bi bi-tools fs-2 d-block mb-2 text-secondary"></i>
+                                <i class="bi bi-wrench fs-2 d-block mb-2 text-secondary"></i>
                                 Belum ada jasa servis yang terdaftar di katalog.
                             </td>
                         </tr>
@@ -135,24 +149,34 @@ include __DIR__ . '/includes/header.php';
                             <tr>
                                 <td class="ps-4 text-muted small"><?= $no++ ?></td>
                                 <td>
-                                    <span class="badge bg-secondary font-mono small me-1"><?= e($row['kode_layanan']) ?></span>
-                                    <span class="fw-semibold text-dark"><?= e($row['nama_layanan']) ?></span>
+                                    <div class="fw-semibold text-dark"><?= e($row['nama_layanan']) ?></div>
+                                    <span class="badge bg-light text-secondary font-mono border">
+                                        <?= e($row['kode_layanan']) ?>
+                                    </span>
                                 </td>
-                                <td><span class="badge bg-light text-dark border"><?= e($row['kategori']) ?></span></td>
                                 <td>
-                                    <small class="text-muted"><i class="bi bi-clock me-1"></i><?= e($row['estimasi_waktu']) ?></small>
+                                    <span class="badge bg-light text-secondary border"><?= e($row['kategori']) ?></span>
                                 </td>
-                                <td class="fw-bold text-success"><?= rupiah($row['biaya_jasa']) ?></td>
+                                <td>
+                                    <span class="text-muted small"><i class="bi bi-clock me-1"></i><?= e($row['estimasi_waktu']) ?></span>
+                                </td>
+                                <td class="text-end font-mono fw-bold text-dark">
+                                    <?= rupiah($row['biaya_jasa']) ?>
+                                </td>
                                 <td class="text-end pe-4">
-                                    <button class="btn btn-outline-secondary btn-sm me-1" 
-                                            onclick="editLayanan(<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>)">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>
-                                    <a href="layanan.php?action=hapus&id=<?= (int)$row['id_layanan'] ?>" 
-                                       class="btn btn-outline-danger btn-sm" 
-                                       onclick="return confirm('Apakah Anda yakin ingin menghapus jasa ini?');">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
+                                    <div class="table-actions">
+                                        <button class="btn btn-outline-secondary btn-sm" 
+                                                onclick="editLayanan(<?= htmlspecialchars(json_encode($row), ENT_QUOTES, 'UTF-8') ?>)" 
+                                                title="Edit Jasa">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <a href="layanan.php?action=hapus&id=<?= (int)$row['id_layanan'] ?>" 
+                                           class="btn btn-outline-danger btn-sm" 
+                                           onclick="return confirm('Apakah Anda yakin ingin menghapus jasa servis ini?');" 
+                                           title="Hapus">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -163,92 +187,102 @@ include __DIR__ . '/includes/header.php';
     </div>
 </div>
 
-<!-- =====================================================================
-     MODAL TAMBAH LAYANAN
-     ===================================================================== -->
+<!-- MODAL TAMBAH JASA -->
 <div class="modal fade" id="modalTambah" tabindex="-1">
     <div class="modal-dialog">
         <form action="layanan.php" method="POST" class="modal-content">
             <input type="hidden" name="action" value="tambah">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold"><i class="bi bi-wrench text-primary me-2"></i>Tambah Jasa Servis</h5>
+                <h5 class="modal-title card-title mb-0"><i class="bi bi-wrench text-primary me-2"></i>Tambah Jasa Servis Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-2 mb-3">
+                    <div class="col-md-5">
+                        <label class="form-label">Kode Jasa <span class="text-danger">*</span></label>
+                        <input type="text" name="kode_layanan" class="form-control font-mono text-uppercase" placeholder="Contoh: SRV-001" required>
+                    </div>
+                    <div class="col-md-7">
+                        <label class="form-label">Nama Layanan Servis <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_layanan" class="form-control" placeholder="Contoh: Tune Up Mesin Bensin" required>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Kode Jasa <span class="text-danger">*</span></label>
-                        <input type="text" name="kode_layanan" class="form-control font-mono text-uppercase" placeholder="SRV-001" required>
+                        <label class="form-label">Kategori</label>
+                        <select name="kategori" class="form-select">
+                            <option value="Perawatan Mesin">Perawatan Mesin</option>
+                            <option value="Sistem Rem">Sistem Rem</option>
+                            <option value="Sistem Pendingin / AC">Sistem Pendingin / AC</option>
+                            <option value="Kaki-kaki & Ban">Kaki-kaki & Ban</option>
+                            <option value="Kelistrikan">Kelistrikan</option>
+                            <option value="Umum" selected>Umum</option>
+                        </select>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Kategori Pekerjaan</label>
-                        <input type="text" name="kategori" class="form-control" placeholder="Mesin / Rem / AC" value="Umum">
+                        <label class="form-label">Estimasi Waktu Pengerjaan</label>
+                        <input type="text" name="estimasi_waktu" class="form-control" placeholder="Contoh: 1.5 Jam" value="1 Jam">
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-semibold">Nama Layanan Jasa <span class="text-danger">*</span></label>
-                    <input type="text" name="nama_layanan" class="form-control" placeholder="Contoh: Tune Up Injeksi Standar" required>
-                </div>
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Ongkos Jasa (Rp) <span class="text-danger">*</span></label>
-                        <input type="number" name="biaya_jasa" class="form-control" placeholder="0" min="0" step="1000" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Estimasi Waktu</label>
-                        <input type="text" name="estimasi_waktu" class="form-control" placeholder="1 Jam / 45 Menit" value="1 Jam">
-                    </div>
+                    <label class="form-label">Tarif Ongkos Jasa (Rp) <span class="text-danger">*</span></label>
+                    <input type="number" name="biaya_jasa" class="form-control font-mono" placeholder="Contoh: 150000" min="0" required>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary fw-semibold"><i class="bi bi-save me-1"></i> Simpan Jasa</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Simpan Layanan</button>
             </div>
         </form>
     </div>
 </div>
 
-<!-- =====================================================================
-     MODAL EDIT LAYANAN
-     ===================================================================== -->
+<!-- MODAL EDIT JASA -->
 <div class="modal fade" id="modalEdit" tabindex="-1">
     <div class="modal-dialog">
         <form action="layanan.php" method="POST" class="modal-content">
             <input type="hidden" name="action" value="edit">
             <input type="hidden" name="id_layanan" id="edit_id_layanan">
             <div class="modal-header">
-                <h5 class="modal-title fw-bold"><i class="bi bi-pencil-square text-secondary me-2"></i>Edit Jasa Servis</h5>
+                <h5 class="modal-title card-title mb-0"><i class="bi bi-pencil-square text-secondary me-2"></i>Edit Data Jasa Servis</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <div class="row g-2 mb-3">
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Kode Jasa <span class="text-danger">*</span></label>
+                    <div class="col-md-5">
+                        <label class="form-label">Kode Jasa <span class="text-danger">*</span></label>
                         <input type="text" name="kode_layanan" id="edit_kode_layanan" class="form-control font-mono text-uppercase" required>
                     </div>
+                    <div class="col-md-7">
+                        <label class="form-label">Nama Layanan Servis <span class="text-danger">*</span></label>
+                        <input type="text" name="nama_layanan" id="edit_nama_layanan" class="form-control" required>
+                    </div>
+                </div>
+                <div class="row g-2 mb-3">
                     <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Kategori Pekerjaan</label>
-                        <input type="text" name="kategori" id="edit_kategori" class="form-control">
+                        <label class="form-label">Kategori</label>
+                        <select name="kategori" id="edit_kategori" class="form-select">
+                            <option value="Perawatan Mesin">Perawatan Mesin</option>
+                            <option value="Sistem Rem">Sistem Rem</option>
+                            <option value="Sistem Pendingin / AC">Sistem Pendingin / AC</option>
+                            <option value="Kaki-kaki & Ban">Kaki-kaki & Ban</option>
+                            <option value="Kelistrikan">Kelistrikan</option>
+                            <option value="Umum">Umum</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">Estimasi Waktu</label>
+                        <input type="text" name="estimasi_waktu" id="edit_estimasi_waktu" class="form-control">
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label small fw-semibold">Nama Layanan Jasa <span class="text-danger">*</span></label>
-                    <input type="text" name="nama_layanan" id="edit_nama_layanan" class="form-control" required>
-                </div>
-                <div class="row g-2">
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Ongkos Jasa (Rp) <span class="text-danger">*</span></label>
-                        <input type="number" name="biaya_jasa" id="edit_biaya_jasa" class="form-control" min="0" step="1000" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label small fw-semibold">Estimasi Waktu</label>
-                        <input type="text" name="estimasi_waktu" id="edit_estimasi_waktu" class="form-control">
-                    </div>
+                    <label class="form-label">Tarif Ongkos Jasa (Rp) <span class="text-danger">*</span></label>
+                    <input type="number" name="biaya_jasa" id="edit_biaya_jasa" class="form-control font-mono" min="0" required>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary fw-semibold"><i class="bi bi-check2-circle me-1"></i> Simpan Perubahan</button>
+                <button type="submit" class="btn btn-primary"><i class="bi bi-check2-circle me-1"></i> Simpan Perubahan</button>
             </div>
         </form>
     </div>
@@ -258,13 +292,27 @@ include __DIR__ . '/includes/header.php';
 function editLayanan(data) {
     document.getElementById('edit_id_layanan').value = data.id_layanan;
     document.getElementById('edit_kode_layanan').value = data.kode_layanan;
-    document.getElementById('edit_kategori').value = data.kategori || '';
     document.getElementById('edit_nama_layanan').value = data.nama_layanan;
-    document.getElementById('edit_biaya_jasa').value = data.biaya_jasa;
+    document.getElementById('edit_kategori').value = data.kategori || 'Umum';
     document.getElementById('edit_estimasi_waktu').value = data.estimasi_waktu || '1 Jam';
-
+    document.getElementById('edit_biaya_jasa').value = data.biaya_jasa;
+    
     var modal = new bootstrap.Modal(document.getElementById('modalEdit'));
     modal.show();
+}
+
+function filterTabel() {
+    const filter = document.getElementById("filterInput").value.toUpperCase();
+    const rows = document.querySelectorAll("#tableLayanan tbody tr");
+
+    rows.forEach(row => {
+        const text = row.textContent || row.innerText;
+        if (text.toUpperCase().indexOf(filter) > -1) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
 }
 </script>
 

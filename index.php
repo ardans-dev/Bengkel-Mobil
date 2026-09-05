@@ -2,14 +2,12 @@
 /**
  * =====================================================================
  * FILE: index.php
- * DESKRIPSI: Dashboard Utama Sistem Bengkel Mobil & Kasir POS
+ * DESKRIPSI: Dashboard Utama dengan Panduan Alur Kerja 3 Langkah Pengguna Baru
  * =====================================================================
  * 
- * FUNGSI:
- * 1. Menampilkan ringkasan metrik finansial (total omset pendapatan bengkel).
- * 2. Memantau antrean pengerjaan mobil (Menunggu vs Sedang Dikerjakan).
- * 3. Memberikan peringatan dini suku cadang kritis (stok menipis yang wajib direstock).
- * 4. Menyajikan daftar 5 transaksi servis terbaru untuk akses cepat kasir.
+ * ARSITEKTUR KODE:
+ * Mengambil ringkasan metrik analitik bisnis bengkel secara real-time
+ * dan memandu kasir/pengguna baru agar langsung paham alur kerja.
  */
 
 require_once __DIR__ . '/includes/auth.php';
@@ -17,38 +15,37 @@ require_once __DIR__ . '/includes/auth.php';
 $page_title = "Dashboard";
 
 // =====================================================================
-// 1. QUERY ANALITIK METRIK UTAMA DASHBOARD
+// 1. QUERY METRIK ANALITIK
 // =====================================================================
-
-// A. Total Pendapatan Lunas
+// Total omzet dari transaksi yang sudah lunas
 $pendapatan_total = (float)(db()->query("
     SELECT SUM(total_biaya) AS total 
     FROM transaksi 
     WHERE status_pembayaran = 'Lunas'
 ")->fetch()['total'] ?? 0);
 
-// B. Mobil yang Sedang Aktif Dikerjakan di Bengkel
+// Jumlah mobil yang saat ini sedang dikerjakan oleh montir
 $mobil_dikerjakan = (int)(db()->query("
     SELECT COUNT(*) AS total 
     FROM transaksi 
     WHERE status_servis = 'Dikerjakan'
 ")->fetch()['total'] ?? 0);
 
-// C. Mobil yang Masuk Antrean Menunggu
+// Jumlah mobil yang masih menunggu giliran servis
 $antrean_menunggu = (int)(db()->query("
     SELECT COUNT(*) AS total 
     FROM transaksi 
     WHERE status_servis = 'Menunggu'
 ")->fetch()['total'] ?? 0);
 
-// D. Jumlah Suku Cadang yang Stoknya Menipis / Kritis (stok <= stok_minimum)
+// Jumlah item suku cadang yang stoknya berada di bawah batas minimum
 $stok_kritis_count = (int)(db()->query("
     SELECT COUNT(*) AS total 
     FROM sparepart 
     WHERE stok <= stok_minimum
 ")->fetch()['total'] ?? 0);
 
-// E. 5 Transaksi Servis Terbaru
+// Ambil 5 transaksi servis terbaru untuk tabel aktivitas
 $transaksi_terbaru = db()->query("
     SELECT t.*, k.plat_nomor, k.merek, p.nama AS nama_pelanggan, m.nama_mekanik
     FROM transaksi t
@@ -59,7 +56,7 @@ $transaksi_terbaru = db()->query("
     LIMIT 5
 ")->fetchAll();
 
-// F. Daftar Barang Kritis untuk Widget Pengingat Restock
+// Ambil daftar barang suku cadang yang stoknya menipis
 $daftar_kritis = db()->query("
     SELECT kode_sparepart, nama_sparepart, stok, satuan, stok_minimum 
     FROM sparepart 
@@ -71,126 +68,214 @@ $daftar_kritis = db()->query("
 include __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Banner Sambutan & Aksi Cepat -->
-<div class="row align-items-center mb-4 g-3">
-    <div class="col-md-7">
-        <h3 class="fw-bold mb-1">
-            Halo, <?= e($user_login['nama']) ?>! <span class="text-primary">👋</span>
-        </h3>
-        <p class="text-muted small mb-0">
-            Berikut ringkasan operasional dan kondisi kasir Bengkel Mobil Ardans hari ini.
-        </p>
+<!-- =====================================================================
+     BAGIAN 1: HEADER SAMBUTAN & AKSI CEPAT
+     ===================================================================== -->
+<div class="page-header-box">
+    <div>
+        <h1 class="page-title mb-1">Selamat Datang, <?= e($user_login['nama']) ?> 👋</h1>
+        <p class="page-subtitle mb-0">Pusat kendali operasional bengkel, monitoring antrean servis, dan kasir penjualan.</p>
     </div>
-    <div class="col-md-5 text-md-end">
-        <a href="kasir.php" class="btn btn-warning btn-lg fw-bold shadow-sm text-dark px-4">
-            <i class="bi bi-cart-check-fill me-1"></i> Buka Servis Baru (Kasir POS)
+    <div class="d-flex align-items-center gap-2">
+        <a href="kasir.php" class="btn btn-warning text-dark fw-bold shadow-sm">
+            <i class="bi bi-plus-circle-fill me-1"></i> + Mobil Masuk (Tiket Baru)
         </a>
     </div>
 </div>
 
 <!-- =====================================================================
-     4 KARTU METRIK UTAMA (FINANSIAL & OPERASIONAL)
+     BAGIAN 2: PANDUAN ALUR KERJA 3 LANGKAH (RAMAH PENGGUNA BARU)
+     ===================================================================== -->
+<div class="onboarding-banner">
+    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+        <div>
+            <h5 class="mb-0 text-white fw-bold"><i class="bi bi-compass text-info me-2"></i>Panduan Alur Kerja Bengkel (3 Langkah Mudah)</h5>
+            <small class="text-white-50">Bingung harus mulai dari mana? Ikuti alur operasional standar di bawah ini:</small>
+        </div>
+        <span class="badge bg-primary">Petunjuk Operasional</span>
+    </div>
+
+    <div class="row g-3">
+        <!-- Langkah 1: Mobil Pasien Datang -->
+        <div class="col-md-4">
+            <div class="workflow-step-card">
+                <div>
+                    <span class="step-num-badge step-1-badge">Langkah 1</span>
+                    <h6 class="text-white fw-bold mb-1 fs-6">Mobil Pasien Masuk</h6>
+                    <p class="text-white-50 small mb-3">
+                        Daftarkan plat nomor mobil, pilih montir yang bertugas, dan catat keluhan kerusakan kendaraan.
+                    </p>
+                </div>
+                <a href="kasir.php" class="btn btn-sm btn-warning text-dark fw-bold w-100">
+                    <i class="bi bi-plus-circle me-1"></i> Mulai di Menu Kasir →
+                </a>
+            </div>
+        </div>
+
+        <!-- Langkah 2: Pengerjaan Servis & Pasang Part -->
+        <div class="col-md-4">
+            <div class="workflow-step-card">
+                <div>
+                    <span class="step-num-badge step-2-badge">Langkah 2</span>
+                    <h6 class="text-white fw-bold mb-1 fs-6">Servis & Pasang Part</h6>
+                    <p class="text-white-50 small mb-3">
+                        Montir membongkar mobil. Tambahkan jasa servis atau suku cadang yang diganti (stok otomatis berkurang).
+                    </p>
+                </div>
+                <a href="transaksi.php" class="btn btn-sm btn-info text-dark fw-bold w-100">
+                    <i class="bi bi-tools me-1"></i> Buka Antrean & Servis →
+                </a>
+            </div>
+        </div>
+
+        <!-- Langkah 3: Kasir Bayar & Cetak Nota -->
+        <div class="col-md-4">
+            <div class="workflow-step-card">
+                <div>
+                    <span class="step-num-badge step-3-badge">Langkah 3</span>
+                    <h6 class="text-white fw-bold mb-1 fs-6">Kasir & Cetak Nota</h6>
+                    <p class="text-white-50 small mb-3">
+                        Servis selesai. Terima uang pembayaran pelanggan, hitung kembalian kasir, lalu cetak struk nota resmi.
+                    </p>
+                </div>
+                <a href="transaksi.php?status=Selesai" class="btn btn-sm btn-success text-white fw-bold w-100">
+                    <i class="bi bi-printer me-1"></i> Kasir Pembayaran →
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- =====================================================================
+     BAGIAN 3: 4 KARTU METRIK RINGKASAN
      ===================================================================== -->
 <div class="row g-3 mb-4">
-    <!-- 1. Total Omset Pendapatan -->
+    <!-- 1. Total Pendapatan -->
     <div class="col-sm-6 col-lg-3">
-        <div class="card shadow-sm border-0 h-100 p-3 bg-white border-start border-primary border-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-semibold">Total Pendapatan</span>
-                <span class="badge bg-primary-subtle text-primary p-2 rounded-circle"><i class="bi bi-wallet2 fs-6"></i></span>
+        <div class="stat-card border-start border-4 border-primary">
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="stat-card-title">TOTAL PENDAPATAN</span>
+                    <span class="badge badge-primary-subtle"><i class="bi bi-wallet2"></i></span>
+                </div>
+                <div class="stat-card-value text-primary"><?= rupiah($pendapatan_total) ?></div>
             </div>
-            <div class="fs-4 fw-bold text-dark font-mono"><?= rupiah($pendapatan_total) ?></div>
-            <small class="text-success mt-1"><i class="bi bi-check-circle me-1"></i>Dari seluruh transaksi lunas</small>
+            <div class="stat-card-footer text-success">
+                <i class="bi bi-check-circle-fill"></i> Akumulasi pembayaran lunas
+            </div>
         </div>
     </div>
 
     <!-- 2. Sedang Dikerjakan -->
     <div class="col-sm-6 col-lg-3">
-        <div class="card shadow-sm border-0 h-100 p-3 bg-white border-start border-warning border-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-semibold">Sedang Dikerjakan</span>
-                <span class="badge bg-warning-subtle text-warning p-2 rounded-circle"><i class="bi bi-wrench-adjustable fs-6"></i></span>
+        <div class="stat-card border-start border-4 border-warning">
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="stat-card-title">SEDANG DIKERJAKAN</span>
+                    <span class="badge badge-warning-subtle"><i class="bi bi-gear-fill"></i></span>
+                </div>
+                <div class="stat-card-value text-warning"><?= $mobil_dikerjakan ?> Unit</div>
             </div>
-            <div class="fs-4 fw-bold text-dark font-mono"><?= $mobil_dikerjakan ?> Unit</div>
-            <small class="text-warning-emphasis mt-1"><i class="bi bi-gear-wide me-1"></i>Montir sedang aktif servis</small>
+            <div class="stat-card-footer text-warning">
+                <i class="bi bi-wrench"></i> Montir aktif mengerjakan
+            </div>
         </div>
     </div>
 
     <!-- 3. Antrean Menunggu -->
     <div class="col-sm-6 col-lg-3">
-        <div class="card shadow-sm border-0 h-100 p-3 bg-white border-start border-info border-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-semibold">Antrean Masuk</span>
-                <span class="badge bg-info-subtle text-info p-2 rounded-circle"><i class="bi bi-clock-history fs-6"></i></span>
+        <div class="stat-card border-start border-4 border-info">
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="stat-card-title">ANTREAN MENUNGGU</span>
+                    <span class="badge badge-info-subtle"><i class="bi bi-hourglass-split"></i></span>
+                </div>
+                <div class="stat-card-value text-info"><?= $antrean_menunggu ?> Unit</div>
             </div>
-            <div class="fs-4 fw-bold text-dark font-mono"><?= $antrean_menunggu ?> Unit</div>
-            <small class="text-muted mt-1"><i class="bi bi-hourglass me-1"></i>Menunggu giliran servis</small>
+            <div class="stat-card-footer text-muted">
+                <i class="bi bi-clock"></i> Menunggu antrean bengkel
+            </div>
         </div>
     </div>
 
-    <!-- 4. Peringatan Stok Kritis -->
+    <!-- 4. Stok Kritis -->
     <div class="col-sm-6 col-lg-3">
-        <div class="card shadow-sm border-0 h-100 p-3 bg-white border-start border-danger border-4">
-            <div class="d-flex justify-content-between align-items-center mb-2">
-                <span class="text-muted small fw-semibold">Stok Kritis</span>
-                <span class="badge bg-danger-subtle text-danger p-2 rounded-circle"><i class="bi bi-exclamation-triangle fs-6"></i></span>
+        <div class="stat-card border-start border-4 border-danger">
+            <div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="stat-card-title">STOK MENIPIS</span>
+                    <span class="badge badge-danger-subtle"><i class="bi bi-exclamation-triangle-fill"></i></span>
+                </div>
+                <div class="stat-card-value text-danger"><?= $stok_kritis_count ?> Item</div>
             </div>
-            <div class="fs-4 fw-bold text-danger font-mono"><?= $stok_kritis_count ?> Item</div>
-            <small class="text-danger mt-1"><i class="bi bi-bell me-1"></i>Perlu segera restock gudang</small>
+            <div class="stat-card-footer text-danger">
+                <i class="bi bi-bell-fill"></i> Segera lakukan restock
+            </div>
         </div>
     </div>
 </div>
 
+<!-- =====================================================================
+     BAGIAN 4: TABEL AKTIVITAS SERVIS & WIDGET STOK
+     ===================================================================== -->
 <div class="row g-4">
-    <!-- =================================================================
-         TABEL 5 SERVIS TERBARU
-         ================================================================= -->
+    <!-- Kolom Kiri: 5 Servis Terbaru -->
     <div class="col-lg-8">
-        <div class="card shadow-sm border-0 h-100">
-            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
-                <h6 class="mb-0 fw-bold text-dark"><i class="bi bi-clock-history me-2 text-primary"></i>5 Servis Masuk Terbaru</h6>
-                <a href="transaksi.php" class="small text-decoration-none fw-semibold">Lihat Seluruh Riwayat →</a>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-receipt-cutoff text-primary"></i>
+                    <span class="card-title mb-0">Aktivitas Servis Terbaru</span>
+                </div>
+                <a href="transaksi.php" class="small text-decoration-none fw-semibold">Buka Semua Antrean →</a>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light small">
+                    <table class="table align-middle">
+                        <thead>
                             <tr>
-                                <th class="ps-3">Invoice</th>
-                                <th>Mobil</th>
-                                <th>Pelanggan</th>
-                                <th>Status</th>
-                                <th class="text-end pe-3">Total</th>
+                                <th class="ps-4">No. Invoice</th>
+                                <th>Mobil Pasien</th>
+                                <th>Pemilik</th>
+                                <th>Status Servis</th>
+                                <th class="text-end pe-4">Total Biaya</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if (empty($transaksi_terbaru)): ?>
                                 <tr>
-                                    <td colspan="5" class="text-center py-4 text-muted small">Belum ada aktivitas servis.</td>
+                                    <td colspan="5" class="text-center py-4 text-muted small">
+                                        <i class="bi bi-inbox fs-4 d-block mb-1 text-secondary"></i>
+                                        Belum ada data servis masuk hari ini.
+                                    </td>
                                 </tr>
                             <?php else: ?>
                                 <?php foreach ($transaksi_terbaru as $t): ?>
                                     <tr>
-                                        <td class="ps-3">
-                                            <a href="detail_transaksi.php?id=<?= $t['id_transaksi'] ?>" class="font-mono fw-bold text-decoration-none text-primary small">
+                                        <td class="ps-4">
+                                            <a href="detail_transaksi.php?id=<?= (int)$t['id_transaksi'] ?>" class="font-mono fw-bold text-decoration-none text-primary">
                                                 <?= e($t['kode_transaksi']) ?>
                                             </a>
+                                            <div class="text-muted" style="font-size: 0.725rem;"><?= date('d/m/Y H:i', strtotime($t['tanggal_masuk'])) ?></div>
                                         </td>
                                         <td>
-                                            <span class="badge bg-dark font-mono"><?= e($t['plat_nomor']) ?></span>
-                                            <small class="text-muted d-block"><?= e($t['merek']) ?></small>
+                                            <span class="badge-plat me-1"><?= e($t['plat_nomor']) ?></span>
+                                            <span class="fw-semibold text-dark"><?= e($t['merek']) ?></span>
                                         </td>
-                                        <td class="small fw-medium text-dark"><?= e($t['nama_pelanggan']) ?></td>
                                         <td>
-                                            <?php if ($t['status_servis'] === 'Selesai'): ?>
-                                                <span class="badge bg-success-subtle text-success border">Selesai</span>
+                                            <div class="fw-medium text-dark"><?= e($t['nama_pelanggan']) ?></div>
+                                            <small class="text-muted">Mekanik: <?= e($t['nama_mekanik']) ?></small>
+                                        </td>
+                                        <td>
+                                            <?php if ($t['status_servis'] === 'Menunggu'): ?>
+                                                <span class="badge badge-warning-subtle"><i class="bi bi-clock me-1"></i>Menunggu</span>
                                             <?php elseif ($t['status_servis'] === 'Dikerjakan'): ?>
-                                                <span class="badge bg-warning-subtle text-warning border">Dikerjakan</span>
+                                                <span class="badge badge-info-subtle"><i class="bi bi-gear me-1"></i>Dikerjakan</span>
                                             <?php else: ?>
-                                                <span class="badge bg-secondary-subtle text-secondary border">Menunggu</span>
+                                                <span class="badge badge-success-subtle"><i class="bi bi-check-circle me-1"></i>Selesai</span>
                                             <?php endif; ?>
                                         </td>
-                                        <td class="text-end pe-3 font-mono fw-bold small text-dark">
+                                        <td class="text-end pe-4 font-mono fw-bold text-dark">
                                             <?= rupiah($t['total_biaya']) ?>
                                         </td>
                                     </tr>
@@ -203,62 +288,42 @@ include __DIR__ . '/includes/header.php';
         </div>
     </div>
 
-    <!-- =================================================================
-         WIDGET STOK MENIPIS & SHORTCUT CEPAT
-         ================================================================= -->
+    <!-- Kolom Kanan: Peringatan Stok Kritis -->
     <div class="col-lg-4">
-        <!-- Widget Stok Menipis -->
-        <div class="card shadow-sm border-0 mb-4">
-            <div class="card-header bg-white py-3">
-                <h6 class="mb-0 fw-bold text-danger"><i class="bi bi-exclamation-octagon me-2"></i>Peringatan Stok Menipis</h6>
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-bell-fill text-danger"></i>
+                    <span class="card-title mb-0">Peringatan Suku Cadang</span>
+                </div>
+                <a href="sparepart.php" class="small text-decoration-none fw-semibold">Kelola Stok →</a>
             </div>
-            <div class="card-body p-3">
+            <div class="card-body p-0">
                 <?php if (empty($daftar_kritis)): ?>
-                    <div class="text-center py-3 text-muted small">
-                        <i class="bi bi-shield-check fs-2 text-success d-block mb-1"></i>
-                        Semua stok suku cadang aman dan tercukupi.
+                    <div class="p-4 text-center text-muted">
+                        <i class="bi bi-check-circle fs-3 text-success d-block mb-2"></i>
+                        <p class="mb-0 small fw-medium">Semua stok suku cadang dalam kondisi aman dan mencukupi.</p>
                     </div>
                 <?php else: ?>
-                    <ul class="list-group list-group-flush small">
-                        <?php foreach ($daftar_kritis as $dk): ?>
-                            <li class="list-group-item d-flex justify-content-between align-items-center px-0 py-2">
+                    <ul class="list-group list-group-flush">
+                        <?php foreach ($daftar_kritis as $sp): ?>
+                            <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                                 <div>
-                                    <div class="fw-semibold text-dark"><?= e($dk['nama_sparepart']) ?></div>
-                                    <span class="badge bg-light text-secondary font-mono border"><?= e($dk['kode_sparepart']) ?></span>
+                                    <div class="fw-semibold text-dark mb-0"><?= e($sp['nama_sparepart']) ?></div>
+                                    <small class="font-mono text-muted"><?= e($sp['kode_sparepart']) ?></small>
                                 </div>
-                                <span class="badge bg-danger">
-                                    Sisa <?= (int)$dk['stok'] ?> <?= e($dk['satuan']) ?>
-                                </span>
+                                <div class="text-end">
+                                    <span class="badge bg-danger text-white font-mono px-2 py-1">
+                                        <?= (int)$sp['stok'] ?> <?= e($sp['satuan']) ?>
+                                    </span>
+                                    <div class="text-danger small" style="font-size: 0.725rem;">Min: <?= (int)$sp['stok_minimum'] ?></div>
+                                </div>
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                    <div class="text-center mt-3 pt-2 border-top">
-                        <a href="sparepart.php" class="btn btn-outline-danger btn-sm w-100">
-                            <i class="bi bi-box-seam me-1"></i> Kelola Inventaris Suku Cadang
-                        </a>
-                    </div>
                 <?php endif; ?>
             </div>
         </div>
-
-        <!-- Widget Pintasan Akses Cepat -->
-        <div class="card shadow-sm border-0">
-            <div class="card-body p-3">
-                <h6 class="fw-bold mb-3 small text-secondary text-uppercase">Pintasan Cepat</h6>
-                <div class="d-grid gap-2">
-                    <a href="pelanggan.php" class="btn btn-light text-start border btn-sm">
-                        <i class="bi bi-person-plus text-primary me-2"></i>Tambah Pelanggan Baru
-                    </a>
-                    <a href="kendaraan.php" class="btn btn-light text-start border btn-sm">
-                        <i class="bi bi-car-front text-primary me-2"></i>Daftarkan Mobil Pasien
-                    </a>
-                    <a href="sparepart.php" class="btn btn-light text-start border btn-sm">
-                        <i class="bi bi-plus-circle text-primary me-2"></i>Restock Barang Gudang
-                    </a>
-                </div>
-            </div>
-        </div>
-
     </div>
 </div>
 

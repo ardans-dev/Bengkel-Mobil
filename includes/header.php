@@ -2,147 +2,161 @@
 /**
  * =====================================================================
  * FILE: includes/header.php
- * DESKRIPSI: Template Atas (Header & Navigasi Utama)
+ * DESKRIPSI: Template Header & Navigasi Terpadu (Harmonis, Proporsional & Rapi)
  * =====================================================================
  * 
- * FUNGSI:
- * File ini dipanggil di baris awal setiap halaman utama aplikasi.
- * Berisi tag HTML <head>, link Bootstrap 5 CSS, Bootstrap Icons,
- * dan Navbar navigasi responsif dengan tombol Kasir, Master Data, serta Profil.
+ * DESAIN BARU:
+ * 1. Tidak berdesakan / tidak ada spasi renggang acak (Fixed 62px height).
+ * 2. Menu disederhanakan agar pengguna baru langsung paham:
+ *    - Dashboard (Pusat Informasi)
+ *    - Kasir / Mobil Masuk (Mulai Transaksi)
+ *    - Antrean & Servis (Pengerjaan & Kasir Nota)
+ *    - Data Master (Semua data inventaris & kontak dalam 1 dropdown rapi)
+ * 3. Profil user & Logout berada dalam dropdown kanan yang elegan.
  */
 
-// Ambil data kasir/admin yang sedang login saat ini
-$user_login = current_user();
-
-// Dapatkan nama file yang sedang dibuka untuk menandai menu aktif (Active Tab)
+$user_login   = current_user();
 $current_page = basename($_SERVER['PHP_SELF']);
+
+// Ambil inisial nama untuk avatar bulat (misal: "Ahmad Yardan" -> "AY")
+$nama_parts = explode(' ', trim($user_login['nama']));
+$inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? substr($nama_parts[1], 0, 1) : ''));
+
+// Cek apakah halaman aktif merupakan bagian dari Data Master
+$is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', 'sparepart.php', 'layanan.php', 'mekanik.php']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= isset($page_title) ? e($page_title) . ' - ' : '' ?>Bengkel Mobil Ardans</title>
+    <title><?= isset($page_title) ? e($page_title) . ' — ' : '' ?>Bengkel Mobil Ardans</title>
     
-    <!-- Bootstrap 5 CSS Framework -->
+    <!-- Bootstrap 5.3.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons 1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Google Fonts Inter -->
+    <!-- Google Fonts Inter & JetBrains Mono -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #f1f5f9; /* Slate-100 halus */
-            color: #1e293b;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-        .font-mono {
-            font-family: 'JetBrains Mono', monospace;
-        }
-        .navbar-brand {
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .nav-link {
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.2s ease;
-        }
-        .nav-link.active {
-            font-weight: 600;
-            color: #38bdf8 !important; /* Biru terang untuk menu aktif */
-        }
-        .card {
-            border: 1px solid #e2e8f0;
-            border-radius: 12px;
-            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.05);
-        }
-        .btn {
-            border-radius: 8px;
-            font-weight: 500;
-        }
-        .badge {
-            font-weight: 500;
-        }
-        footer {
-            margin-top: auto;
-        }
-    </style>
+    <!-- Stylesheet Desain Terpadu -->
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
 
     <!-- =====================================================================
-         NAVBAR UTAMA BENGKEL
+         NAVBAR UTAMA (PROPORSI PRESISI & RAPI)
          ===================================================================== -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-2 sticky-top shadow-sm">
-        <div class="container">
-            <!-- Brand Logo -->
-            <a class="navbar-brand d-flex items-center gap-2" href="index.php">
-                <span class="text-primary"><i class="bi bi-gear-wide-connected"></i></span>
+    <header class="navbar-custom">
+        <div class="container-xl navbar-inner">
+            
+            <!-- 1. Brand Logo & Identitas Bengkel -->
+            <a href="index.php" class="navbar-brand-logo">
+                <div class="brand-icon-box">
+                    <i class="bi bi-wrench-adjustable-circle-fill"></i>
+                </div>
                 <span>Bengkel<span class="text-info">Ardans</span></span>
             </a>
 
-            <!-- Tombol Hamburger Mobile -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <!-- 2. Menu Navigasi Sederhana (Hanya 4 Pintu Utama) -->
+            <nav class="d-none d-lg-flex align-items-center nav-menu-group">
+                <!-- 1. Dashboard -->
+                <a href="index.php" class="nav-link-item <?= $current_page == 'index.php' ? 'active' : '' ?>">
+                    <i class="bi bi-grid-1x2"></i> Dashboard
+                </a>
 
-            <!-- Menu Tautan -->
-            <div class="collapse navbar-collapse" id="navMain">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
-                    <li class="nav-item">
-                        <a class="nav-link <?= $current_page == 'index.php' ? 'active' : '' ?>" href="index.php">
-                            <i class="bi bi-speedometer2 me-1"></i> Dashboard
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-warning fw-bold <?= $current_page == 'kasir.php' ? 'active' : '' ?>" href="kasir.php">
-                            <i class="bi bi-cart-check-fill me-1"></i> Kasir POS
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link <?= $current_page == 'transaksi.php' ? 'active' : '' ?>" href="transaksi.php">
-                            <i class="bi bi-receipt me-1"></i> Riwayat Servis
-                        </a>
-                    </li>
-                    
-                    <!-- Dropdown Master Data -->
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle <?= in_array($current_page, ['pelanggan.php', 'kendaraan.php', 'sparepart.php', 'layanan.php', 'mekanik.php']) ? 'active' : '' ?>" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-database me-1"></i> Master Data
-                        </a>
-                        <ul class="dropdown-menu shadow">
-                            <li><a class="dropdown-item" href="pelanggan.php"><i class="bi bi-people me-2"></i>Data Pelanggan</a></li>
-                            <li><a class="dropdown-item" href="kendaraan.php"><i class="bi bi-car-front me-2"></i>Data Kendaraan</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="sparepart.php"><i class="bi bi-tools me-2"></i>Stok Sparepart</a></li>
-                            <li><a class="dropdown-item" href="layanan.php"><i class="bi bi-wrench-adjustable me-2"></i>Katalog Jasa</a></li>
-                            <li><a class="dropdown-item" href="mekanik.php"><i class="bi bi-person-badge me-2"></i>Data Mekanik</a></li>
-                        </ul>
-                    </li>
-                </ul>
+                <!-- 2. Kasir (Pendaftaran Mobil Masuk) -->
+                <a href="kasir.php" class="nav-link-item <?= $current_page == 'kasir.php' ? 'active' : '' ?>">
+                    <i class="bi bi-car-front-fill"></i> Kasir (Mobil Masuk)
+                </a>
 
-                <!-- Profil Pengguna & Logout -->
-                <div class="d-flex align-items-center gap-3">
-                    <div class="text-white-50 small d-none d-md-block text-end">
-                        <div class="text-white fw-bold"><?= e($user_login['nama']) ?></div>
-                        <span class="badge bg-secondary text-uppercase" style="font-size: 0.65rem;"><?= e($user_login['role']) ?></span>
-                    </div>
-                    <a href="logout.php" class="btn btn-outline-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin keluar dari sistem?');">
-                        <i class="bi bi-box-arrow-right me-1"></i> Keluar
+                <!-- 3. Antrean & Servis -->
+                <a href="transaksi.php" class="nav-link-item <?= in_array($current_page, ['transaksi.php', 'detail_transaksi.php']) ? 'active' : '' ?>">
+                    <i class="bi bi-clock-history"></i> Antrean & Servis
+                </a>
+
+                <!-- 4. Data Master (Dropdown Terpadu) -->
+                <div class="dropdown">
+                    <button class="nav-link-item dropdown-toggle border-0 bg-transparent <?= $is_master_active ? 'active' : '' ?>" type="button" data-bs-toggle="dropdown">
+                        <i class="bi bi-database"></i> Data Master
+                    </button>
+                    <ul class="dropdown-menu nav-dropdown-menu">
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'pelanggan.php' ? 'active' : '' ?>" href="pelanggan.php">
+                                <i class="bi bi-people text-primary me-2"></i>Data Pelanggan
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'kendaraan.php' ? 'active' : '' ?>" href="kendaraan.php">
+                                <i class="bi bi-car-front text-info me-2"></i>Data Mobil Pasien
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'sparepart.php' ? 'active' : '' ?>" href="sparepart.php">
+                                <i class="bi bi-box-seam text-warning me-2"></i>Stok Sparepart
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'layanan.php' ? 'active' : '' ?>" href="layanan.php">
+                                <i class="bi bi-tools text-success me-2"></i>Katalog Jasa Servis
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'mekanik.php' ? 'active' : '' ?>" href="mekanik.php">
+                                <i class="bi bi-person-badge text-danger me-2"></i>Data Montir / Mekanik
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- 3. Sisi Kanan: Tombol Cepat "+ Servis Baru" & Profil Akun -->
+            <div class="d-flex align-items-center gap-2">
+                <!-- Tombol Aksi Cepat Buka Tiket Servis -->
+                <a href="kasir.php" class="btn-nav-action d-none d-sm-inline-flex">
+                    <i class="bi bi-plus-circle-fill"></i> + Mobil Masuk
+                </a>
+
+                <!-- Dropdown Profil Kasir / Admin -->
+                <div class="dropdown">
+                    <a href="#" class="user-profile-pill dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
+                        <div class="user-avatar-circle"><?= e($inisial) ?></div>
+                        <span class="d-none d-md-inline small fw-semibold text-white"><?= e($user_login['nama']) ?></span>
+                        <span class="badge bg-secondary text-white-50 ms-1 d-none d-md-inline" style="font-size: 0.65rem;"><?= e($user_login['role']) ?></span>
                     </a>
+                    <ul class="dropdown-menu dropdown-menu-end nav-dropdown-menu mt-2">
+                        <li class="px-3 py-2 text-white-50 small border-bottom border-secondary mb-1">
+                            Login sebagai: <br>
+                            <strong class="text-white"><?= e($user_login['nama']) ?></strong> (<?= e($user_login['username']) ?>)
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger" href="logout.php" onclick="return confirm('Apakah Anda yakin ingin keluar dari sistem bengkel?');">
+                                <i class="bi bi-box-arrow-right text-danger me-2"></i>Keluar / Logout
+                            </a>
+                        </li>
+                    </ul>
                 </div>
             </div>
+
         </div>
-    </nav>
+    </header>
+
+    <!-- Sub-Navbar untuk Pengguna Mobile / Tablet Layar Kecil -->
+    <div class="mobile-nav-bar d-lg-none">
+        <a href="index.php" class="btn-mobile <?= $current_page == 'index.php' ? 'active' : '' ?>">Dashboard</a>
+        <a href="kasir.php" class="btn-mobile <?= $current_page == 'kasir.php' ? 'active' : '' ?>">+ Mobil Masuk</a>
+        <a href="transaksi.php" class="btn-mobile <?= in_array($current_page, ['transaksi.php', 'detail_transaksi.php']) ? 'active' : '' ?>">Antrean</a>
+        <a href="sparepart.php" class="btn-mobile <?= $current_page == 'sparepart.php' ? 'active' : '' ?>">Sparepart</a>
+        <a href="pelanggan.php" class="btn-mobile <?= $current_page == 'pelanggan.php' ? 'active' : '' ?>">Pelanggan</a>
+        <a href="kendaraan.php" class="btn-mobile <?= $current_page == 'kendaraan.php' ? 'active' : '' ?>">Mobil</a>
+        <a href="layanan.php" class="btn-mobile <?= $current_page == 'layanan.php' ? 'active' : '' ?>">Jasa</a>
+        <a href="mekanik.php" class="btn-mobile <?= $current_page == 'mekanik.php' ? 'active' : '' ?>">Mekanik</a>
+    </div>
 
     <!-- Container Utama Konten Halaman -->
-    <main class="container my-4">
-        <!-- Render pesan notifikasi flash jika ada -->
+    <main class="container-xl my-4">
+        <!-- Render notifikasi flash jika ada pesan sukses atau gagal -->
         <?php display_flash(); ?>

@@ -1,0 +1,662 @@
+/**
+ * =====================================================================
+ * SISTEM DESAIN TERPADU - BENGKEL MOBIL ARDANS
+ * =====================================================================
+ * Dibuat khusus untuk arsitektur Native PHP, HTML5, CSS3, & Vanilla JS.
+ * Fokus:
+ * 1. Skala Tipografi Konsisten (tidak ada font loncat-loncat)
+ * 2. Header & Navigasi Seimbang (proporsional, tidak mepet / renggang)
+ * 3. Alur Pengguna Pemula (intuitif, jelas ke mana harus klik)
+ * 4. Komponen Kasir POS & Tabel Data Modern
+ */
+
+/* ---------------------------------------------------------------------
+   VARIABEL WARNA & TOKENS DESAIN
+   --------------------------------------------------------------------- */
+:root {
+    /* Brand Colors */
+    --brand-primary: #0284c7;       /* Sky Blue 600 - Segar & Profesional */
+    --brand-primary-hover: #0369a1;
+    --brand-primary-light: #e0f2fe;
+    
+    --brand-dark: #0f172a;          /* Slate 900 - Elegan & Kontras */
+    --brand-dark-surface: #1e293b;  /* Slate 800 */
+    
+    --brand-accent: #f59e0b;        /* Amber 500 - Khusus Tombol Kasir */
+    --brand-accent-hover: #d97706;
+    
+    /* Semantic Colors */
+    --color-success: #10b981;
+    --color-warning: #f59e0b;
+    --color-danger: #ef4444;
+    --color-info: #06b6d4;
+
+    /* Backgrounds & Surfaces */
+    --color-bg: #f8fafc;            /* Slate 50 */
+    --color-surface: #ffffff;
+    --color-surface-subtle: #f1f5f9;/* Slate 100 */
+    --color-border: #e2e8f0;        /* Slate 200 */
+    --color-border-dark: #cbd5e1;
+
+    /* Text Colors */
+    --color-text-main: #0f172a;     /* Slate 900 */
+    --color-text-body: #334155;     /* Slate 700 */
+    --color-text-muted: #64748b;    /* Slate 500 */
+    --color-text-light: #94a3b8;    /* Slate 400 */
+
+    /* Typography Scale */
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+    /* Border Radius */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 14px;
+    --radius-pill: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-card: 0 1px 3px 0 rgba(15, 23, 42, 0.06), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+    --shadow-hover: 0 10px 15px -3px rgba(15, 23, 42, 0.08), 0 4px 6px -4px rgba(15, 23, 42, 0.03);
+    --shadow-dropdown: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------------------------------------------------------------------
+   1. RESET & STANDARISASI TIPOGRAFI GLOBAL
+   --------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-sans);
+    font-size: 0.875rem; /* 14px standar aplikasi modern */
+    line-height: 1.5;
+    background-color: var(--color-bg);
+    color: var(--color-text-body);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+}
+
+.font-mono {
+    font-family: var(--font-mono) !important;
+}
+
+/* Skala Ukuran Heading yang Seimbang & Konsisten */
+h1, .h1, .page-title {
+    font-size: 1.375rem; /* 22px */
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-text-main);
+    line-height: 1.25;
+}
+
+h2, .h2 {
+    font-size: 1.2rem;   /* 19.2px */
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--color-text-main);
+}
+
+h3, .h3, .card-title {
+    font-size: 1.0rem;   /* 16px */
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--color-text-main);
+}
+
+h4, .h4 { font-size: 0.9375rem; font-weight: 600; }
+h5, .h5 { font-size: 0.875rem;  font-weight: 600; }
+h6, .h6 { font-size: 0.75rem;   font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+
+p, .text-body {
+    font-size: 0.875rem;
+    color: var(--color-text-body);
+}
+
+.page-subtitle {
+    font-size: 0.8125rem; /* 13px */
+    color: var(--color-text-muted);
+    font-weight: 400;
+}
+
+.text-muted, small, .small {
+    font-size: 0.8125rem !important; /* 13px */
+    color: var(--color-text-muted) !important;
+}
+
+/* ---------------------------------------------------------------------
+   2. NAVBAR & HEADER UTAMA (SEIMBANG & PROPORSIONAL)
+   --------------------------------------------------------------------- */
+.navbar-custom {
+    background-color: var(--brand-dark);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    height: 62px;
+    display: flex;
+    align-items: center;
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+}
+
+.navbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Logo Brand */
+.navbar-brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #ffffff !important;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+    padding-right: 0.75rem;
+}
+
+.brand-icon-box {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-sm);
+    background: linear-gradient(135deg, var(--brand-primary) 0%, #0284c7 100%);
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+/* Navigasi Tab Tengah */
+.nav-menu-group {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.nav-link-item {
+    color: #94a3b8 !important;
+    font-weight: 500;
+    font-size: 0.85rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+}
+
+.nav-link-item:hover {
+    color: #ffffff !important;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-link-item.active {
+    color: #ffffff !important;
+    background-color: rgba(2, 132, 199, 0.25);
+    border: 1px solid rgba(2, 132, 199, 0.4);
+    font-weight: 600;
+}
+
+/* Dropdown Menu Navbar */
+.nav-dropdown-menu {
+    background-color: var(--brand-dark-surface);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: var(--shadow-dropdown);
+    border-radius: var(--radius-md);
+    padding: 0.5rem;
+    min-width: 200px;
+}
+
+.nav-dropdown-menu .dropdown-item {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.nav-dropdown-menu .dropdown-item:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.nav-dropdown-menu .dropdown-divider {
+    border-color: rgba(255, 255, 255, 0.08);
+    margin: 0.4rem 0;
+}
+
+/* Tombol Aksi Utama Kasir / Mobil Masuk */
+.btn-nav-action {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff !important;
+    font-weight: 600;
+    font-size: 0.825rem;
+    padding: 0.42rem 0.85rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    box-shadow: 0 2px 4px rgba(245, 158, 11, 0.25);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    border: none;
+    white-space: nowrap;
+}
+
+.btn-nav-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(245, 158, 11, 0.35);
+}
+
+/* User Pill Profil Kasir */
+.user-profile-pill {
+    background-color: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-pill);
+    padding: 0.25rem 0.75rem 0.25rem 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.user-avatar-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Sub-Navbar Khusus Mobile */
+.mobile-nav-bar {
+    background-color: #1e293b;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.mobile-nav-bar .btn-mobile {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: var(--radius-sm);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    text-decoration: none;
+}
+
+.mobile-nav-bar .btn-mobile.active {
+    background-color: var(--brand-primary);
+    color: #ffffff;
+    border-color: var(--brand-primary);
+}
+
+/* ---------------------------------------------------------------------
+   3. BREADCRUMB & HEADER HALAMAN (STANDAR KONSISTEN)
+   --------------------------------------------------------------------- */
+.page-header-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.25rem;
+}
+
+.breadcrumb-custom {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 0.25rem 0;
+    font-size: 0.775rem;
+    color: var(--color-text-muted);
+}
+
+.breadcrumb-custom a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+}
+
+.breadcrumb-custom a:hover {
+    color: var(--brand-primary);
+}
+
+.breadcrumb-custom .active {
+    color: var(--color-text-main);
+    font-weight: 600;
+}
+
+/* ---------------------------------------------------------------------
+   4. KARTU & KONTEN (RADIUS, PADDING & BORDER SERAGAM)
+   --------------------------------------------------------------------- */
+.card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card-header {
+    background-color: #fafbfc;
+    border-bottom: 1px solid var(--color-border);
+    padding: 0.9rem 1.25rem;
+    border-top-left-radius: var(--radius-lg) !important;
+    border-top-right-radius: var(--radius-lg) !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--color-text-main);
+}
+
+.card-body {
+    padding: 1.25rem;
+}
+
+.card-footer {
+    background-color: #fafbfc;
+    border-top: 1px solid var(--color-border);
+    padding: 0.85rem 1.25rem;
+    border-bottom-left-radius: var(--radius-lg) !important;
+    border-bottom-right-radius: var(--radius-lg) !important;
+}
+
+/* ---------------------------------------------------------------------
+   5. TABEL DATA MODERN & SEARCH BOX
+   --------------------------------------------------------------------- */
+.table {
+    margin-bottom: 0;
+    width: 100%;
+}
+
+.table th {
+    background-color: #f8fafc;
+    color: #64748b;
+    font-size: 0.725rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.0rem;
+    border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
+}
+
+.table td {
+    padding: 0.8rem 1.0rem;
+    vertical-align: middle;
+    border-bottom: 1px solid var(--color-border);
+    font-size: 0.85rem;
+    color: #1e293b;
+}
+
+.table tbody tr:hover td {
+    background-color: #f8fafc;
+}
+
+.table-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* Search Box Dalam Card Header */
+.table-search-input {
+    max-width: 260px;
+    font-size: 0.825rem;
+    padding: 0.35rem 0.75rem 0.35rem 2rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--color-border);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='%2394a3b8' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 8px center;
+}
+
+/* ---------------------------------------------------------------------
+   6. TOMBOL, FORM & INPUT
+   --------------------------------------------------------------------- */
+.btn {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: var(--radius-sm);
+    padding: 0.45rem 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    transition: all 0.15s ease;
+    line-height: 1.4;
+}
+
+.btn-sm {
+    font-size: 0.775rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    background-color: var(--brand-primary);
+    border-color: var(--brand-primary);
+}
+
+.btn-primary:hover {
+    background-color: var(--brand-primary-hover);
+    border-color: var(--brand-primary-hover);
+}
+
+.form-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #475569;
+    margin-bottom: 0.35rem;
+}
+
+.form-control, .form-select {
+    border-radius: var(--radius-sm);
+    border: 1px solid #cbd5e1;
+    font-size: 0.85rem;
+    padding: 0.5rem 0.8rem;
+    color: var(--color-text-main);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: var(--brand-primary);
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    outline: none;
+}
+
+/* ---------------------------------------------------------------------
+   7. BADGES & IDENTITAS KENDARAAN
+   --------------------------------------------------------------------- */
+.badge {
+    font-weight: 500;
+    font-size: 0.725rem;
+    padding: 0.3em 0.65em;
+    border-radius: var(--radius-pill);
+}
+
+.badge-plat {
+    background-color: #0f172a;
+    color: #ffffff;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 0.25rem 0.55rem;
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.05em;
+    border: 1px solid #334155;
+    display: inline-block;
+}
+
+/* Modern Subtle Badges */
+.badge-success-subtle { background-color: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.badge-warning-subtle { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.badge-danger-subtle  { background-color: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+.badge-info-subtle    { background-color: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.badge-primary-subtle { background-color: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+
+/* ---------------------------------------------------------------------
+   8. ONBOARDING & ALUR KERJA 3 LANGKAH (RAMAH PENGGUNA BARU)
+   --------------------------------------------------------------------- */
+.onboarding-banner {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: var(--radius-lg);
+    padding: 1.5rem;
+    color: #ffffff;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.workflow-step-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    transition: all 0.2s ease;
+}
+
+.workflow-step-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    transform: translateY(-2px);
+    color: #ffffff;
+    border-color: rgba(255, 255, 255, 0.25);
+}
+
+.step-num-badge {
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: var(--radius-pill);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: inline-block;
+    margin-bottom: 0.5rem;
+}
+
+.step-1-badge { background-color: #f59e0b; color: #0f172a; }
+.step-2-badge { background-color: #38bdf8; color: #0f172a; }
+.step-3-badge { background-color: #10b981; color: #ffffff; }
+
+/* ---------------------------------------------------------------------
+   9. KARTU METRIK STATISTIK (SERAGAM & PRESISI)
+   --------------------------------------------------------------------- */
+.stat-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: 1.15rem;
+    height: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.stat-card-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-card-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    font-family: var(--font-mono);
+    margin: 0.35rem 0 0.25rem 0;
+}
+
+.stat-card-footer {
+    font-size: 0.775rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+/* ---------------------------------------------------------------------
+   10. POS BILLING TERMINAL (CHECKOUT KASIR)
+   --------------------------------------------------------------------- */
+.pos-terminal-card {
+    background: #ffffff;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-hover);
+    overflow: hidden;
+}
+
+.pos-terminal-header {
+    background: #0f172a;
+    color: #ffffff;
+    padding: 1.15rem 1.25rem;
+}
+
+.pos-total-screen {
+    background: #020617;
+    color: #38bdf8;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    text-align: right;
+    margin-bottom: 1.25rem;
+    border: 1px solid #1e293b;
+}
+
+.pos-total-screen .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    margin-bottom: 0.25rem;
+}
+
+.pos-total-screen .amount {
+    font-size: 2.0rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    line-height: 1;
+    color: #38bdf8;
+}
+
+/* ---------------------------------------------------------------------
+   11. FOOTER
+   --------------------------------------------------------------------- */
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid var(--color-border);
+    padding: 1.25rem 0;
+    margin-top: auto;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+}
