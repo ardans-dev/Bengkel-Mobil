@@ -11,6 +11,8 @@
  * 2. Menggunakan "Exception Error Handling" sehingga jika terjadi error query,
  *    sistem tidak akan membocorkan struktur tabel ke layar pengguna.
  * 3. Menggunakan pola singleton sederhana agar koneksi tidak dibuat berulang kali.
+ * 4. Dilengkapi "Smart Credential Fallback": otomatis mengenali lingkungan WSL2 Linux
+ *    maupun Laragon/XAMPP di Windows tanpa perlu ubah-ubah kodingan!
  */
 
 // Mulai session global jika belum aktif
@@ -22,15 +24,12 @@ if (session_status() === PHP_SESSION_NONE) {
 // 1. Parameter Koneksi Database MySQL
 // ---------------------------------------------------------------------
 define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');          // Kosongkan untuk default Laragon / XAMPP
 define('DB_NAME', 'db_bengkel_mobil');
 define('DB_PORT', 3306);
 
 /**
  * Mendapatkan instance koneksi database (PDO).
- * Fungsi ini menggunakan teknik static variable agar koneksi database
- * hanya dibuat satu kali dalam satu siklus HTTP request (hemat memori).
+ * Mendukung auto-detection kredensial lokal (WSL2 vs Laragon/XAMPP).
  *
  * @return PDO Objek koneksi database aktif
  */
@@ -41,23 +40,34 @@ function db(): PDO {
         $dsn = "mysql:host=" . DB_HOST . ";port=" . DB_PORT . ";dbname=" . DB_NAME . ";charset=utf8mb4";
         
         $options = [
-            // Munculkan exception jika query SQL error (mudah di-debug saat dev)
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            // Format data yang diambil otomatis menjadi array asosiatif ['kolom' => 'nilai']
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            // MATIKAN emulated prepared statements agar SQL dieksekusi secara native oleh MySQL
-            // Ini adalah perlindungan nomor 1 terhadap SQL Injection!
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
 
-        try {
-            $pdo = new PDO($dsn, DB_USER, DB_PASS, $options);
-        } catch (PDOException $e) {
-            // Catat error ke log server dan tampilkan pesan ramah (jangan bocorkan password ke user)
+        // Daftar kombinasi user/password lokal (otomatis mencoba yang cocok)
+        $credentials = [
+            ['user' => 'ardans',  'pass' => 'admin123'], // User aktif MySQL WSL2
+            ['user' => 'dbeaver', 'pass' => 'admin123'], // User DBeaver WSL2
+            ['user' => 'root',    'pass' => ''],         // Default Laragon / XAMPP Windows
+            ['user' => 'root',    'pass' => 'admin123'], // Alternatif root
+        ];
+
+        $last_error = null;
+        foreach ($credentials as $cred) {
+            try {
+                $pdo = new PDO($dsn, $cred['user'], $cred['pass'], $options);
+                break; // Berhasil terhubung, hentikan loop
+            } catch (PDOException $e) {
+                $last_error = $e;
+            }
+        }
+
+        if ($pdo === null) {
             die("<div style='font-family:sans-serif; padding:20px; background:#fee2e2; color:#991b1b; border-radius:8px;'>"
                 . "<h3>⚠️ Gagal Terhubung ke Database MySQL</h3>"
-                . "<p>Pastikan MySQL di Laragon / XAMPP sudah aktif dan database <b>" . DB_NAME . "</b> sudah di-import.</p>"
-                . "<small>Pesan Error: " . htmlspecialchars($e->getMessage()) . "</small>"
+                . "<p>Pastikan MySQL sudah aktif dan database <b>" . DB_NAME . "</b> sudah di-import.</p>"
+                . "<small>Pesan Error: " . htmlspecialchars($last_error ? $last_error->getMessage() : '') . "</small>"
                 . "</div>");
         }
     }
@@ -72,7 +82,6 @@ function db(): PDO {
 /**
  * Helper Anti-XSS (Cross-Site Scripting).
  * Selalu bungkus data teks dari database dengan fungsi e() sebelum dicetak ke HTML.
- * Mengubah karakter berbahaya seperti <script> menjadi teks entitas yang aman (&lt;script&gt;).
  *
  * @param mixed $data Data string yang ingin dibersihkan
  * @return string Teks aman
@@ -111,7 +120,6 @@ function format_tanggal(string $datetime): string {
 
 /**
  * Menyimpan pesan flash (notifikasi sekali pakai) ke dalam Session.
- * Berguna untuk menampilkan pesan sukses/gagal setelah proses redirect form.
  *
  * @param string $type Jenis pesan: 'success', 'danger', 'warning', 'info'
  * @param string $message Isi pesan yang ingin ditampilkan
