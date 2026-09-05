@@ -19,7 +19,7 @@ $nama_parts = explode(' ', trim($user_login['nama']));
 $inisial = strtoupper(substr($nama_parts[0], 0, 1) . (isset($nama_parts[1]) ? substr($nama_parts[1], 0, 1) : ''));
 
 // Cek apakah halaman aktif merupakan bagian dari Data Master
-$is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', 'sparepart.php', 'layanan.php', 'mekanik.php']);
+$is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', 'sparepart.php', 'layanan.php', 'mekanik.php', 'pengaturan.php']);
 ?>
 <!DOCTYPE html>
 <html lang="id">
@@ -49,7 +49,7 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
         <div class="container-xl navbar-inner">
             
             <!-- 1. Brand Logo & Identitas Bengkel -->
-            <a href="index.php" class="navbar-brand-logo">
+            <a href="dashboard.php" class="navbar-brand-logo">
                 <div class="brand-icon-box">
                     <i class="bi bi-wrench-adjustable-circle-fill"></i>
                 </div>
@@ -59,7 +59,7 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
             <!-- 2. Menu Navigasi Sederhana -->
             <nav class="d-none d-lg-flex align-items-center nav-menu-group">
                 <!-- 1. Dashboard -->
-                <a href="index.php" class="nav-link-item <?= $current_page == 'index.php' ? 'active' : '' ?>">
+                <a href="dashboard.php" class="nav-link-item <?= $current_page == 'dashboard.php' ? 'active' : '' ?>">
                     <i class="bi bi-grid-1x2"></i> Dashboard
                 </a>
 
@@ -105,12 +105,21 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
                                 <i class="bi bi-person-badge text-danger me-2"></i>Data Montir / Mekanik
                             </a>
                         </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item <?= $current_page == 'pengaturan.php' ? 'active' : '' ?>" href="pengaturan.php">
+                                <i class="bi bi-gear text-info me-2"></i>Pengaturan Bengkel
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </nav>
 
             <!-- 3. Sisi Kanan: Profil Kasir / Admin -->
             <div class="d-flex align-items-center gap-2">
+                <a href="index.php" target="_blank" class="btn btn-sm btn-outline-info text-decoration-none d-none d-sm-inline-flex align-items-center" title="Buka Landing Page Publik">
+                    <i class="bi bi-globe2 me-1"></i> <span class="d-none d-md-inline">Website Publik</span>
+                </a>
                 <!-- Dropdown Profil Akun -->
                 <div class="dropdown">
                     <a href="#" class="user-profile-pill dropdown-toggle text-decoration-none" data-bs-toggle="dropdown">
@@ -137,7 +146,7 @@ $is_master_active = in_array($current_page, ['pelanggan.php', 'kendaraan.php', '
 
     <!-- Sub-Navbar untuk Pengguna Mobile / Tablet Layar Kecil -->
     <div class="mobile-nav-bar d-lg-none">
-        <a href="index.php" class="btn-mobile <?= $current_page == 'index.php' ? 'active' : '' ?>">Dashboard</a>
+        <a href="dashboard.php" class="btn-mobile <?= $current_page == 'dashboard.php' ? 'active' : '' ?>">Dashboard</a>
         <a href="kasir.php" class="btn-mobile <?= $current_page == 'kasir.php' ? 'active' : '' ?>">Kasir</a>
         <a href="transaksi.php" class="btn-mobile <?= in_array($current_page, ['transaksi.php', 'detail_transaksi.php']) ? 'active' : '' ?>">Antrean</a>
         <a href="sparepart.php" class="btn-mobile <?= $current_page == 'sparepart.php' ? 'active' : '' ?>">Sparepart</a>

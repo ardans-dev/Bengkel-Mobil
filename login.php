@@ -15,7 +15,7 @@ require_once __DIR__ . '/config/database.php';
 
 // Jika pengguna sudah memiliki sesi login aktif, langsung arahkan ke Dashboard
 if (isset($_SESSION['is_logged_in']) && $_SESSION['is_logged_in'] === true) {
-    redirect('index.php');
+    redirect('dashboard.php');
 }
 
 $error = null;
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Tampilkan pesan selamat datang di Dashboard
             set_flash('success', "Selamat datang kembali, <b>" . e($user['nama_lengkap']) . "</b>!");
-            redirect('index.php');
+            redirect('dashboard.php');
         } else {
             // Berikan pesan kegagalan yang netral agar hacker tidak tahu apakah username atau password yang salah
             $error = "Username atau Password yang Anda masukkan salah!";

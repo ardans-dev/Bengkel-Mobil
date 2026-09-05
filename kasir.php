@@ -82,7 +82,7 @@ include __DIR__ . '/includes/header.php';
 <div class="page-header-box">
     <div>
         <ul class="breadcrumb-custom">
-            <li><a href="index.php">Dashboard</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
             <li>/</li>
             <li class="active">Kasir</li>
         </ul>
@@ -161,7 +161,7 @@ include __DIR__ . '/includes/header.php';
 
                     <!-- Tombol Aksi Simpan -->
                     <div class="d-flex align-items-center justify-content-between pt-3 border-top">
-                        <a href="index.php" class="btn btn-light border text-muted">
+                        <a href="dashboard.php" class="btn btn-light border text-muted">
                             <i class="bi bi-arrow-left me-1"></i> Batal
                         </a>
                         <button type="submit" class="btn btn-primary px-4">

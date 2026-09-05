@@ -170,6 +170,26 @@ CREATE TABLE detail_transaksi_sparepart (
 ) ENGINE=InnoDB;
 
 -- =====================================================================
+-- =====================================================================
+-- TABEL 10: pengaturan_bengkel (Profil & Jam Operasional Bengkel)
+-- Fungsi: Menyimpan profil, jadwal buka/tutup, dan status operasional real-time.
+-- =====================================================================
+CREATE TABLE pengaturan_bengkel (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nama_bengkel VARCHAR(100) NOT NULL DEFAULT 'Bengkel Ardans',
+    slogan VARCHAR(255) NOT NULL DEFAULT 'Solusi Terpercaya Perawatan & Perbaikan Mobil Anda',
+    alamat TEXT NOT NULL,
+    no_telepon VARCHAR(25) NOT NULL DEFAULT '0812-3456-7890',
+    no_whatsapp VARCHAR(25) NOT NULL DEFAULT '6281234567890',
+    email VARCHAR(100) NOT NULL DEFAULT 'kontak@bengkelardans.id',
+    jam_buka TIME NOT NULL DEFAULT '08:00:00',
+    jam_tutup TIME NOT NULL DEFAULT '16:00:00',
+    hari_operasional VARCHAR(100) NOT NULL DEFAULT 'Senin - Sabtu',
+    status_manual ENUM('Otomatis', 'Buka_Paksa', 'Tutup_Sementara', 'Libur_Mendadak') NOT NULL DEFAULT 'Otomatis',
+    pesan_pengumuman TEXT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
 -- DATA AWAL (SEED DATA / DUMMY REALISTIS UNTUK PENGUJIAN)
 -- =====================================================================
 
@@ -235,3 +255,22 @@ INSERT INTO detail_transaksi_layanan (id_transaksi, id_layanan, biaya_jasa, subt
 INSERT INTO detail_transaksi_sparepart (id_transaksi, id_sparepart, harga_satuan, jumlah, subtotal) VALUES
 (1, 1, 330000.00, 1, 330000.00),
 (1, 2, 45000.00, 1, 45000.00);
+
+-- 8. Pengaturan Awal Bengkel
+INSERT INTO pengaturan_bengkel (
+    id, nama_bengkel, slogan, alamat, no_telepon, no_whatsapp, email, 
+    jam_buka, jam_tutup, hari_operasional, status_manual, pesan_pengumuman
+) VALUES (
+    1,
+    'Bengkel Ardans',
+    'Solusi Terpercaya Perawatan & Perbaikan Mobil Anda',
+    'Jl. Soekarno Hatta No. 450, Bandung, Jawa Barat (Samping Pool Bus)',
+    '0812-3456-7890',
+    '6281234567890',
+    'kontak@bengkelardans.id',
+    '08:00:00',
+    '16:00:00',
+    'Senin - Sabtu (Minggu & Tanggal Merah Libur)',
+    'Otomatis',
+    NULL
+);

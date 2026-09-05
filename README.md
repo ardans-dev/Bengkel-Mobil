@@ -54,7 +54,9 @@ Bengkel-Mobil/
 │   ├── header.php           # Template header, link Bootstrap 5, & navbar aktif
 │   └── footer.php           # Template penutup HTML & script Bootstrap bundle
 │
-├── index.php                # Dashboard metrik bisnis, antrean mobil, & stok kritis
+├── index.php                # Landing Page Publik (Profil, Katalog Jasa, Cek Status Servis, Brand)
+├── dashboard.php            # Dashboard internal operasional kasir, antrean & metrik bisnis
+├── pengaturan.php           # Konfigurasi jam operasional (Buka/Tutup/Libur Mendadak) & Profil
 ├── kasir.php                # Form pendaftaran servis baru (Kasir POS)
 ├── detail_transaksi.php     # Kelola suku cadang, jasa servis, status & kasir pembayaran (ACID)
 ├── transaksi.php            # Riwayat seluruh transaksi servis dengan filter status

@@ -109,7 +109,7 @@ include __DIR__ . '/includes/header.php';
 <div class="page-header-box">
     <div>
         <ul class="breadcrumb-custom">
-            <li><a href="index.php">Dashboard</a></li>
+            <li><a href="dashboard.php">Dashboard</a></li>
             <li>/</li>
             <li><span>Data Master</span></li>
             <li>/</li>
