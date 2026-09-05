@@ -157,8 +157,8 @@ include __DIR__ . '/includes/header.php';
                                     </a>
                                 </td>
                                 <td>
-                                    <div class="text-dark small"><?= date('d/m/Y', strtotime($row['tanggal_masuk'])) ?></div>
-                                    <small class="text-muted"><?= date('H:i', strtotime($row['tanggal_masuk'])) ?> WIB</small>
+                                    <div class="text-dark small"><?= date('d/m/Y', strtotime($row['tanggal'])) ?></div>
+                                    <small class="text-muted"><?= date('H:i', strtotime($row['tanggal'])) ?> WIB</small>
                                 </td>
                                 <td>
                                     <span class="badge-plat me-1"><?= e($row['plat_nomor']) ?></span>

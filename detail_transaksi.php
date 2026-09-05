@@ -27,6 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($action === 'tambah_layanan') {
         $id_layanan = (int)($_POST['id_layanan'] ?? 0);
 
+        if ($id_layanan <= 0) {
+            set_flash('danger', 'Silakan pilih jasa servis dari katalog!');
+            redirect("detail_transaksi.php?id={$id_transaksi}");
+        }
+
         if ($id_layanan > 0) {
             db()->beginTransaction();
             try {
@@ -64,6 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif ($action === 'tambah_sparepart') {
         $id_sparepart = (int)($_POST['id_sparepart'] ?? 0);
         $jumlah       = (int)($_POST['jumlah'] ?? 1);
+
+        if ($id_sparepart <= 0 || $jumlah <= 0) {
+            set_flash('danger', 'Silakan pilih sparepart dan kuantitas minimal 1 unit!');
+            redirect("detail_transaksi.php?id={$id_transaksi}");
+        }
 
         if ($id_sparepart > 0 && $jumlah > 0) {
             db()->beginTransaction();
@@ -111,9 +121,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // C. Update Status Servis & Kasir Pembayaran
     } elseif ($action === 'update_servis_bayar') {
-        $status_servis     = $_POST['status_servis'] ?? 'Menunggu';
-        $metode_pembayaran = $_POST['metode_pembayaran'] ?? 'Tunai';
-        $jumlah_bayar      = (float)($_POST['jumlah_bayar'] ?? 0);
+        $status_servis     = in_array($_POST['status_servis'] ?? '', ['Menunggu', 'Dikerjakan', 'Selesai', 'Dibatalkan']) ? $_POST['status_servis'] : 'Menunggu';
+        $metode_pembayaran = in_array($_POST['metode_pembayaran'] ?? '', ['Tunai', 'Transfer Bank', 'QRIS']) ? $_POST['metode_pembayaran'] : 'Tunai';
+        $jumlah_bayar      = max(0, (float)($_POST['jumlah_bayar'] ?? 0));
         $catatan_mekanik   = trim($_POST['catatan_mekanik'] ?? '');
 
         $stmt_total = db()->prepare("SELECT total_biaya FROM transaksi WHERE id_transaksi = ?");
@@ -121,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $total_biaya = (float)$stmt_total->fetch()['total_biaya'];
 
         $kembalian = max(0, $jumlah_bayar - $total_biaya);
-        $status_pembayaran = ($jumlah_bayar >= $total_biaya && $total_biaya > 0) ? 'Lunas' : 'Belum Lunas';
+        $status_pembayaran = (($total_biaya == 0 && $status_servis === 'Selesai') || ($total_biaya > 0 && $jumlah_bayar >= $total_biaya)) ? 'Lunas' : 'Belum Lunas';
 
         try {
             $stmt_upd = db()->prepare("

@@ -138,7 +138,7 @@ function display_flash(): void {
     if (isset($_SESSION['flash_message'])) {
         $flash = $_SESSION['flash_message'];
         $type = e($flash['type']);
-        $msg  = e($flash['message']);
+        $msg  = strip_tags($flash['message'], '<b><strong><i><code><br>');
         echo "<div class='alert alert-{$type} alert-dismissible fade show' role='alert'>
                 {$msg}
                 <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>

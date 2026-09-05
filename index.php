@@ -190,7 +190,7 @@ include __DIR__ . '/includes/header.php';
                                             <a href="detail_transaksi.php?id=<?= (int)$t['id_transaksi'] ?>" class="font-mono fw-bold text-decoration-none text-info">
                                                 <?= e($t['kode_transaksi']) ?>
                                             </a>
-                                            <div class="text-muted" style="font-size: 0.725rem;"><?= date('d/m/Y H:i', strtotime($t['tanggal_masuk'])) ?></div>
+                                            <div class="text-muted" style="font-size: 0.725rem;"><?= date('d/m/Y H:i', strtotime($t['tanggal'])) ?></div>
                                         </td>
                                         <td>
                                             <span class="badge-plat me-1"><?= e($t['plat_nomor']) ?></span>
