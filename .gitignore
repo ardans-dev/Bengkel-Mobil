@@ -1,0 +1,77 @@
+# =====================================================================
+# GITIGNORE - BENGKEL MOBIL ARDANS
+# =====================================================================
+
+# 1. Environment & Secret Configuration Files
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.cert
+*.crt
+
+# 2. PHP Server & Application Logs
+*.log
+error_log
+php_errors.log
+logs/
+
+# 3. Temporary & Cache Files
+*.tmp
+*.temp
+cache/
+.cache/
+
+# 4. Dependency Directories (Composer / Node)
+vendor/
+node_modules/
+composer.phar
+
+# 5. Database Backups & Temporary Dumps
+# (database/db_bengkel_mobil.sql tetap di-track sebagai skema resmi)
+*.sql.bak
+*.sql.gz
+*.dump
+*.sqlite
+*.sqlite3
+*.db
+
+# 6. IDE & Text Editor Settings
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+*.swo
+*~
+
+# 7. Operating System Artifacts
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+.directory
+
+# 8. Testing & Scratch Artifacts
+scratch/
+.phpunit.result.cache
+coverage/
+test_output/
